@@ -20,8 +20,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             NetflixLoginScreenJetpackComposeTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
+                    NetflixLoginScreen(
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
@@ -31,17 +30,15 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
+fun NetflixLoginScreen(modifier: Modifier = Modifier) {
+
 }
+
 
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
     NetflixLoginScreenJetpackComposeTheme {
-        Greeting("Android")
+        NetflixLoginScreen()
     }
 }
