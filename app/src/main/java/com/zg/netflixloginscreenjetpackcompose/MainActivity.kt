@@ -22,6 +22,9 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -41,6 +44,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -53,6 +57,7 @@ import com.zg.netflixloginscreenjetpackcompose.ui.theme.Black
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.HintGrey
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.NetflixGrey
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.NetflixLoginScreenJetpackComposeTheme
+import com.zg.netflixloginscreenjetpackcompose.ui.theme.NetflixRed
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.White
 
 class MainActivity : ComponentActivity() {
@@ -88,14 +93,16 @@ fun NetflixLoginScreen(modifier: Modifier = Modifier) {
                     imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
                     contentDescription = null,
                     tint = White,
-                    modifier = Modifier.size(32.dp)
+                    modifier = Modifier
+                        .padding(start = 20.dp)
+                        .size(32.dp)
                 )
             },
             actions = {
                 Text(
                     "Help",
                     style = TextStyle(color = White, fontWeight = FontWeight.Bold, fontSize = 16.sp),
-                    modifier = Modifier.padding(end = 12.dp)
+                    modifier = Modifier.padding(end = 16.dp)
                 )
             }
         )
@@ -146,13 +153,15 @@ fun NetflixLoginContent(modifier: Modifier = Modifier) {
                         .fillMaxWidth()
                 )
 
+                Spacer(Modifier.height(16.dp))
+
                 // Password
                 OutlinedTextField(
                     value = password,
                     onValueChange = {
                         password = it
                     },
-                    visualTransformation = if(isPasswordHidden)PasswordVisualTransformation() else VisualTransformation.None,
+                    visualTransformation = if (isPasswordHidden) PasswordVisualTransformation() else VisualTransformation.None,
                     colors = OutlinedTextFieldDefaults.colors(
                         focusedBorderColor = androidx.compose.ui.graphics.Color.Transparent,
                         unfocusedBorderColor = androidx.compose.ui.graphics.Color.Transparent,
@@ -171,7 +180,7 @@ fun NetflixLoginContent(modifier: Modifier = Modifier) {
                     },
                     suffix = {
                         Text(
-                            if(isPasswordHidden) "SHOW" else "HIDE", style = TextStyle(
+                            if (isPasswordHidden) "SHOW" else "HIDE", style = TextStyle(
                                 fontSize = 16.sp,
                                 color = HintGrey,
                             ),
@@ -183,9 +192,67 @@ fun NetflixLoginContent(modifier: Modifier = Modifier) {
                     shape = RoundedCornerShape(8.dp),
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = 16.dp)
                 )
 
+                // Spacer
+                Spacer(Modifier.height(16.dp))
+
+                // Sign In Button
+                Button(
+                    onClick = {},
+                    shape = RoundedCornerShape(8.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(48.dp)
+                ) {
+                    Text(
+                        "Sign In", style = TextStyle(
+                            color = HintGrey, fontSize = 16.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                    )
+                }
+
+                // Spacer
+                Spacer(Modifier.height(16.dp))
+
+                // OR
+                Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxWidth()) {
+                    Text("OR")
+                }
+
+                // Spacer
+                Spacer(Modifier.height(16.dp))
+
+                // Use a Sign-in Code
+                // Sign In Button
+                Button(
+                    onClick = {},
+                    shape = RoundedCornerShape(8.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = NetflixGrey
+                    ), modifier = Modifier
+                        .fillMaxWidth()
+                        .height(48.dp)
+                ) {
+                    Text(
+                        "Use a Sign-In Code", style = TextStyle(
+                            color = White, fontSize = 16.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                    )
+                }
+
+                // Spacer
+                Spacer(Modifier.height(32.dp))
+
+                // Forgot Password
+                Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxWidth()) {
+                    Text("Forgot Password?", style = TextStyle(fontWeight = FontWeight.SemiBold))
+                }
+
+                // Spacer
+                Spacer(Modifier.height(32.dp))
             }
         }
     }
