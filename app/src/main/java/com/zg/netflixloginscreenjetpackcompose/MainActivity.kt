@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalMaterial3Api::class)
+
 package com.zg.netflixloginscreenjetpackcompose
 
 import android.graphics.Color
@@ -7,7 +9,6 @@ import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -17,13 +18,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -33,9 +31,6 @@ import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldColors
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -44,7 +39,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
@@ -55,14 +49,13 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.Black
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.HintGrey
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.NetflixGrey
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.NetflixLoginScreenJetpackComposeTheme
-import com.zg.netflixloginscreenjetpackcompose.ui.theme.NetflixRed
+import com.zg.netflixloginscreenjetpackcompose.ui.theme.NetflixSansFontFamily
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.White
 
 class MainActivity : ComponentActivity() {
@@ -80,7 +73,6 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NetflixLoginScreen(modifier: Modifier = Modifier) {
     Scaffold(topBar = {
@@ -106,7 +98,7 @@ fun NetflixLoginScreen(modifier: Modifier = Modifier) {
             actions = {
                 Text(
                     "Help",
-                    style = TextStyle(color = White, fontWeight = FontWeight.Bold, fontSize = 16.sp),
+                    style = TextStyle(color = White, fontWeight = FontWeight.Bold, fontSize = 16.sp, fontFamily = NetflixSansFontFamily),
                     modifier = Modifier.padding(end = 16.dp)
                 )
             }
@@ -136,6 +128,9 @@ fun NetflixLoginContent(modifier: Modifier = Modifier) {
                     onValueChange = {
                         emailOrPhoneNumber = it
                     },
+                    textStyle = TextStyle(
+                        fontFamily = NetflixSansFontFamily
+                    ),
                     colors = OutlinedTextFieldDefaults.colors(
                         focusedBorderColor = androidx.compose.ui.graphics.Color.Transparent,
                         unfocusedBorderColor = androidx.compose.ui.graphics.Color.Transparent,
@@ -149,7 +144,7 @@ fun NetflixLoginContent(modifier: Modifier = Modifier) {
                     placeholder = {
                         Text(
                             "Email or phone number", style = TextStyle(
-                                fontSize = 16.sp, color = HintGrey
+                                fontSize = 16.sp, color = HintGrey, fontFamily = NetflixSansFontFamily
                             )
                         )
                     },
@@ -177,10 +172,15 @@ fun NetflixLoginContent(modifier: Modifier = Modifier) {
                         cursorColor = White,
                         focusedLabelColor = androidx.compose.ui.graphics.Color.White,
                     ),
+                    textStyle = TextStyle(
+                        fontFamily = NetflixSansFontFamily
+                    ),
                     placeholder = {
                         Text(
                             "Password",
-                            style = TextStyle(fontSize = 16.sp, color = HintGrey),
+                            style = TextStyle(
+                                fontSize = 16.sp, color = HintGrey, fontFamily = NetflixSansFontFamily
+                            ),
                         )
                     },
                     suffix = {
@@ -188,6 +188,7 @@ fun NetflixLoginContent(modifier: Modifier = Modifier) {
                             if (isPasswordHidden) "SHOW" else "HIDE", style = TextStyle(
                                 fontSize = 16.sp,
                                 color = HintGrey,
+                                fontFamily = NetflixSansFontFamily
                             ),
                             modifier = Modifier.clickable {
                                 isPasswordHidden = !isPasswordHidden
@@ -213,7 +214,8 @@ fun NetflixLoginContent(modifier: Modifier = Modifier) {
                     Text(
                         "Sign In", style = TextStyle(
                             color = HintGrey, fontSize = 16.sp,
-                            fontWeight = FontWeight.Bold
+                            fontWeight = FontWeight.Bold,
+                            fontFamily = NetflixSansFontFamily
                         )
                     )
                 }
@@ -223,7 +225,11 @@ fun NetflixLoginContent(modifier: Modifier = Modifier) {
 
                 // OR
                 Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxWidth()) {
-                    Text("OR")
+                    Text(
+                        "OR", style = TextStyle(
+                            fontFamily = NetflixSansFontFamily
+                        )
+                    )
                 }
 
                 // Spacer
@@ -243,7 +249,8 @@ fun NetflixLoginContent(modifier: Modifier = Modifier) {
                     Text(
                         "Use a Sign-In Code", style = TextStyle(
                             color = White, fontSize = 16.sp,
-                            fontWeight = FontWeight.Bold
+                            fontWeight = FontWeight.Bold,
+                            fontFamily = NetflixSansFontFamily
                         )
                     )
                 }
@@ -253,7 +260,7 @@ fun NetflixLoginContent(modifier: Modifier = Modifier) {
 
                 // Forgot Password
                 Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxWidth()) {
-                    Text("Forgot Password?", style = TextStyle(fontWeight = FontWeight.SemiBold))
+                    Text("Forgot Password?", style = TextStyle(fontWeight = FontWeight.SemiBold, fontFamily = NetflixSansFontFamily))
                 }
 
                 // Spacer
@@ -269,15 +276,20 @@ fun NetflixLoginContent(modifier: Modifier = Modifier) {
 @Composable
 fun SignInTermsAndConditions(modifier: Modifier = Modifier) {
     val annotatedText = buildAnnotatedString {
-        withStyle(style = SpanStyle(color = HintGrey, fontSize = 14.sp)){
+        withStyle(style = SpanStyle(color = HintGrey, fontSize = 14.sp)) {
             append("Sign is protected by Google reCAPTCHA to ensure you are not a robot.")
         }
-        withStyle(style = SpanStyle(color = HintGrey, fontWeight = FontWeight.Bold, fontSize = 14.sp)){
+        withStyle(style = SpanStyle(color = HintGrey, fontWeight = FontWeight.Bold, fontSize = 14.sp)) {
             append(" Learn more.")
         }
     }
 
-    Text(annotatedText, textAlign = TextAlign.Center, style = TextStyle(lineHeight = 18.sp), modifier = modifier)
+    Text(
+        annotatedText,
+        textAlign = TextAlign.Center,
+        style = TextStyle(lineHeight = 18.sp, fontFamily = NetflixSansFontFamily),
+        modifier = modifier
+    )
 }
 
 
