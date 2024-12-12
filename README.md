@@ -2,6 +2,8 @@
 
 Welcome to the **Netflix Login Screen** repository! This project is a recreation of the Netflix login screen using **Jetpack Compose**, showcasing the modern UI capabilities of Compose and Android's declarative UI toolkit.
 
+![NetflixLoginScreenAndroid](https://github.com/user-attachments/assets/427092df-109e-4fc1-88c7-f6b6bd12644b)
+
 ---
 
 ## 📜 Features
