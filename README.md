@@ -15,7 +15,6 @@ Welcome to the **Netflix Login Screen** repository! This project is a recreation
   - Sign-in button
   - Forgot password and Sign up links
 - **Theming:** Adapts to light and dark modes seamlessly.
-- **Animations:** Smooth animations for UI transitions.
 
 ---
 
