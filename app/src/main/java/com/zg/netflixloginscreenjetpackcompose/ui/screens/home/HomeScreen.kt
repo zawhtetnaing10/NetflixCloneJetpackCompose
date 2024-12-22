@@ -15,7 +15,7 @@ import com.zg.netflixloginscreenjetpackcompose.ui.theme.NetflixCloneJetpackCompo
 @Composable
 fun HomeScreen(modifier: Modifier = Modifier) {
 
-    Scaffold(modifier = modifier) { paddingValues ->
+    Scaffold(topBar = { HomeScreenAppbar() }, modifier = modifier) { paddingValues ->
         Surface(
             color = Black,
             modifier = Modifier
