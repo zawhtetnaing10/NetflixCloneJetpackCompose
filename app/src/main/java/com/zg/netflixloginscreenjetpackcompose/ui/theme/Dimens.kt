@@ -15,5 +15,8 @@ val NETFLIX_LOGO_SIZE = 130.dp
 // Text
 val TEXT_REGULAR = 14.sp
 val TEXT_REGULAR_2X = 16.sp
+val TEXT_REGULAR_3X = 20.sp
+val TEXT_LARGE = 24.sp
+val TEXT_BIG = 32.sp
 
 val LINE_HEIGHT_REGULAR = 18.sp
