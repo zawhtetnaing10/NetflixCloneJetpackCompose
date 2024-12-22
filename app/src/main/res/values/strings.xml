@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">NetflixLoginScreenJetpackCompose</string>
+    <string name="email_or_phone_number_placeholder">Email or phone number</string>
+    <string name="password_placeholder">Password</string>
+    <string name="password_show">SHOW</string>
+    <string name="password_hide">HIDE</string>
+    <string name="sign_in">Sign-in</string>
+    <string name="use_a_sign_in_code">"Use a Sign-In Code"</string>
+    <string name="forgot_password">Forget Password?</string>
+    <string name="sign_in_protected_by_recaptcha">Sign is protected by Google reCAPTCHA to ensure you are not a robot.</string>
+    <string name="learn_more"> Learn more.</string>
+    <string name="or">OR</string>
 </resources>
