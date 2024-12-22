@@ -20,6 +20,7 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.tooling.preview.Preview
 import com.zg.netflixloginscreenjetpackcompose.R
 import com.zg.netflixloginscreenjetpackcompose.ui.resusable_composables.NetflixOutlineTextField
 import com.zg.netflixloginscreenjetpackcompose.ui.resusable_composables.NetflixPasswordTextField
@@ -31,22 +32,24 @@ import com.zg.netflixloginscreenjetpackcompose.ui.theme.LINE_HEIGHT_REGULAR
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.MARGIN_MEDIUM_2
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.MARGIN_XLARGE
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.MARGIN_XXLARGE
+import com.zg.netflixloginscreenjetpackcompose.ui.theme.NetflixCloneJetpackComposeTheme
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.NetflixSansFontFamily
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.TEXT_REGULAR
 
 @Composable
-fun NetflixLoginScreen(modifier: Modifier = Modifier) {
+fun NetflixLoginScreen(onTapSignIn: () -> Unit, modifier: Modifier = Modifier) {
     Scaffold(topBar = {
         LoginScreenAppbar()
     }, modifier = modifier.fillMaxSize()) { innerPadding ->
         NetflixLoginContent(
+            onTapSignIn = onTapSignIn,
             modifier = Modifier.padding(innerPadding)
         )
     }
 }
 
 @Composable
-fun NetflixLoginContent(modifier: Modifier = Modifier) {
+fun NetflixLoginContent(onTapSignIn : () -> Unit, modifier: Modifier = Modifier) {
     Surface(color = Black, modifier = modifier.fillMaxSize()) {
         Box(contentAlignment = Alignment.Center) {
             Column(modifier = Modifier.padding(MARGIN_XXLARGE)) {
@@ -68,6 +71,7 @@ fun NetflixLoginContent(modifier: Modifier = Modifier) {
                     title = stringResource(R.string.sign_in),
                     onButtonTapped = {
                         // TODO: - Communicate with ViewModel later
+                        onTapSignIn()
                     }
                 )
                 Spacer(Modifier.height(MARGIN_MEDIUM_2))
@@ -113,4 +117,12 @@ fun SignInTermsAndConditions(modifier: Modifier = Modifier) {
         style = TextStyle(lineHeight = LINE_HEIGHT_REGULAR, fontFamily = NetflixSansFontFamily),
         modifier = modifier
     )
+}
+
+@Preview(showBackground = true, name = "NetflixLoginPreview")
+@Composable
+fun NetflixLoginScreenPreview() {
+    NetflixCloneJetpackComposeTheme {
+        NetflixLoginScreen(onTapSignIn = {})
+    }
 }
