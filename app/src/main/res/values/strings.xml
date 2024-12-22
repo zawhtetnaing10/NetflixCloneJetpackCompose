@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">NetflixLoginScreenJetpackCompose</string>
     <string name="email_or_phone_number_placeholder">Email or phone number</string>
+    <string name="help">Help</string>
     <string name="password_placeholder">Password</string>
     <string name="password_show">SHOW</string>
     <string name="password_hide">HIDE</string>

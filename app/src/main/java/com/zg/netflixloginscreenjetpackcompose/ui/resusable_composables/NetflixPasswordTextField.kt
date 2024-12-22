@@ -17,13 +17,13 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.zg.netflixloginscreenjetpackcompose.R
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.HintGrey
+import com.zg.netflixloginscreenjetpackcompose.ui.theme.MARGIN_MEDIUM
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.NetflixCloneJetpackComposeTheme
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.NetflixGrey
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.NetflixSansFontFamily
+import com.zg.netflixloginscreenjetpackcompose.ui.theme.TEXT_REGULAR_2X
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.White
 
 @Composable
@@ -56,7 +56,7 @@ fun NetflixPasswordTextField(placeholder: String, onChangePassword: (String) -> 
             Text(
                 placeholder,
                 style = TextStyle(
-                    fontSize = 16.sp, color = HintGrey, fontFamily = NetflixSansFontFamily
+                    fontSize = TEXT_REGULAR_2X, color = HintGrey, fontFamily = NetflixSansFontFamily
                 ),
             )
         },
@@ -67,7 +67,7 @@ fun NetflixPasswordTextField(placeholder: String, onChangePassword: (String) -> 
                 else
                     stringResource(R.string.password_hide),
                 style = TextStyle(
-                    fontSize = 16.sp,
+                    fontSize = TEXT_REGULAR_2X,
                     color = HintGrey,
                     fontFamily = NetflixSansFontFamily
                 ),
@@ -76,7 +76,7 @@ fun NetflixPasswordTextField(placeholder: String, onChangePassword: (String) -> 
                 }
             )
         },
-        shape = RoundedCornerShape(8.dp),
+        shape = RoundedCornerShape(MARGIN_MEDIUM),
         modifier = modifier
             .fillMaxWidth()
     )
