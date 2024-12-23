@@ -11,10 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.Black
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.HOME_SCREEN_CATEGORIES_TOP_MARGIN
-import com.zg.netflixloginscreenjetpackcompose.ui.theme.MARGIN_LARGE
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.MARGIN_MEDIUM_2
-import com.zg.netflixloginscreenjetpackcompose.ui.theme.MARGIN_MEDIUM_3
-import com.zg.netflixloginscreenjetpackcompose.ui.theme.MARGIN_XXLARGE
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.NetflixCloneJetpackComposeTheme
 
 @Composable
