@@ -46,7 +46,6 @@ fun HomeScreen(modifier: Modifier = Modifier) {
                     }
                 }
             }
-
         }
     }
 }

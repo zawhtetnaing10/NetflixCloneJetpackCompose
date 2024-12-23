@@ -1,5 +1,6 @@
 package com.zg.netflixloginscreenjetpackcompose.ui.screens.home
 
+import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -13,6 +14,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.zg.netflixloginscreenjetpackcompose.R
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.MARGIN_LARGE
@@ -21,23 +23,12 @@ import com.zg.netflixloginscreenjetpackcompose.ui.theme.NetflixCloneJetpackCompo
 
 @Composable
 fun FeaturedMovie(modifier: Modifier = Modifier) {
-
-    // TODO: - Extract this into a function
-    val configuration = LocalConfiguration.current
-    val screenWidthDp = configuration.screenWidthDp.dp
-    val margins = 24.dp * 2
-
-    // Calculate available width and height
-    val availableWidth = screenWidthDp - margins
-    val aspectRatio = 1.5f
-    val calculatedHeight = availableWidth * aspectRatio
-
     Card(
         elevation = CardDefaults.cardElevation(MARGIN_SMALL),
         modifier = modifier
             .fillMaxWidth()
             .padding(start = MARGIN_LARGE, end = MARGIN_LARGE)
-            .height(calculatedHeight)
+            .height(getFeaturedMovieHeight(LocalConfiguration.current))
     ) {
         Image(
             painterResource(R.drawable.lal_palma_poster),
@@ -46,6 +37,22 @@ fun FeaturedMovie(modifier: Modifier = Modifier) {
             modifier = Modifier.fillMaxSize()
         )
     }
+}
+
+/**
+ * Calculates the height for featured movie
+ * Since the image has dimensions of 900 x 1350, the aspect ratio is 1.5f
+ * available width is equal to screen width - margins (24.dp * 2 = 48.dp)
+ * height is obtained by multiplying available width with aspect ratio
+ */
+private fun getFeaturedMovieHeight(localConfiguration : Configuration): Dp {
+    val screenWidthDp = localConfiguration.screenWidthDp.dp
+    val margins = MARGIN_LARGE * 2
+
+    val availableWidth = screenWidthDp - margins
+    val aspectRatio = 1.5f
+    val calculatedHeight = availableWidth * aspectRatio
+    return calculatedHeight
 }
 
 @Preview
