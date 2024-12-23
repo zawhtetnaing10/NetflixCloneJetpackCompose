@@ -2,6 +2,8 @@ package com.zg.netflixloginscreenjetpackcompose.ui.screens.home
 
 import android.content.res.Configuration
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -10,19 +12,28 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.zg.netflixloginscreenjetpackcompose.R
+import com.zg.netflixloginscreenjetpackcompose.ui.theme.Black
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.MARGIN_LARGE
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.MARGIN_SMALL
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.NetflixCloneJetpackComposeTheme
 
 @Composable
 fun FeaturedMovie(modifier: Modifier = Modifier) {
+
+    val calculatedHeight = getFeaturedMovieHeight(LocalConfiguration.current)
+    val gradientOffset = with(LocalDensity.current){calculatedHeight.toPx()}
+
     Card(
         elevation = CardDefaults.cardElevation(MARGIN_SMALL),
         modifier = modifier
@@ -30,12 +41,29 @@ fun FeaturedMovie(modifier: Modifier = Modifier) {
             .padding(start = MARGIN_LARGE, end = MARGIN_LARGE)
             .height(getFeaturedMovieHeight(LocalConfiguration.current))
     ) {
-        Image(
-            painterResource(R.drawable.lal_palma_poster),
-            contentScale = ContentScale.Crop,
-            contentDescription = null,
-            modifier = Modifier.fillMaxSize()
-        )
+        Box {
+            // Image
+            Image(
+                painterResource(R.drawable.lal_palma_poster),
+                contentScale = ContentScale.Crop,
+                contentDescription = null,
+                modifier = Modifier.fillMaxSize()
+            )
+
+            // Gradient
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(
+                        // TODO: - Reduce alpha for Black Gradient Color
+                        brush = Brush.linearGradient(
+                            colors = listOf(Color.Transparent, Black),
+                            start = Offset(0f, 0f),
+                            end = Offset(0f, gradientOffset)
+                        )
+                    )
+            )
+        }
     }
 }
 
@@ -45,7 +73,7 @@ fun FeaturedMovie(modifier: Modifier = Modifier) {
  * available width is equal to screen width - margins (24.dp * 2 = 48.dp)
  * height is obtained by multiplying available width with aspect ratio
  */
-private fun getFeaturedMovieHeight(localConfiguration : Configuration): Dp {
+private fun getFeaturedMovieHeight(localConfiguration: Configuration): Dp {
     val screenWidthDp = localConfiguration.screenWidthDp.dp
     val margins = MARGIN_LARGE * 2
 
