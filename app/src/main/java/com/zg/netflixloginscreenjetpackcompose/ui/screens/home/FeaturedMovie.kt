@@ -23,7 +23,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.zg.netflixloginscreenjetpackcompose.R
-import com.zg.netflixloginscreenjetpackcompose.ui.theme.Black
+import com.zg.netflixloginscreenjetpackcompose.ui.theme.FeaturedMovieGradient
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.MARGIN_LARGE
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.MARGIN_SMALL
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.NetflixCloneJetpackComposeTheme
@@ -31,8 +31,10 @@ import com.zg.netflixloginscreenjetpackcompose.ui.theme.NetflixCloneJetpackCompo
 @Composable
 fun FeaturedMovie(modifier: Modifier = Modifier) {
 
+    // Height of the card
     val calculatedHeight = getFeaturedMovieHeight(LocalConfiguration.current)
-    val gradientOffset = with(LocalDensity.current){calculatedHeight.toPx()}
+    // y gradient offset
+    val gradientOffset = with(LocalDensity.current) { calculatedHeight.toPx() }
 
     Card(
         elevation = CardDefaults.cardElevation(MARGIN_SMALL),
@@ -51,20 +53,24 @@ fun FeaturedMovie(modifier: Modifier = Modifier) {
             )
 
             // Gradient
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(
-                        // TODO: - Reduce alpha for Black Gradient Color
-                        brush = Brush.linearGradient(
-                            colors = listOf(Color.Transparent, Black),
-                            start = Offset(0f, 0f),
-                            end = Offset(0f, gradientOffset)
-                        )
-                    )
-            )
+            FeaturedMovieGradient(gradientOffset = gradientOffset)
         }
     }
+}
+
+@Composable
+fun FeaturedMovieGradient(gradientOffset: Float, modifier: Modifier = Modifier) {
+    Box(
+        modifier = modifier
+            .fillMaxSize()
+            .background(
+                brush = Brush.linearGradient(
+                    colors = listOf(Color.Transparent, FeaturedMovieGradient),
+                    start = Offset(0f, 0f),
+                    end = Offset(0f, gradientOffset)
+                )
+            )
+    )
 }
 
 /**
