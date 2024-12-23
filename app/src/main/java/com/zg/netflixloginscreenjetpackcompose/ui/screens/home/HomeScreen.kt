@@ -9,6 +9,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.Black
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.HOME_SCREEN_CATEGORIES_TOP_MARGIN
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.MARGIN_MEDIUM_2
@@ -38,8 +39,11 @@ fun HomeScreen(modifier: Modifier = Modifier) {
                 )
 
                 // Actual Content
-                LazyColumn {
-                    // TODO: - Add Content
+                LazyColumn(modifier = Modifier.padding(top = 140.dp)) {
+                    // Featured Movie
+                    item {
+                        FeaturedMovie()
+                    }
                 }
             }
 
