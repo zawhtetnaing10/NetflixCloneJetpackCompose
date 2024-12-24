@@ -31,6 +31,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -102,7 +103,7 @@ fun FeaturedMovieButtons(modifier: Modifier = Modifier) {
     ) {
         // Play Button
         NetflixRoundedButton(
-            label = "Play",
+            label = stringResource(R.string.play),
             icon = Icons.Default.PlayArrow,
             backgroundColor = White,
             contentColor = Black,
@@ -112,7 +113,7 @@ fun FeaturedMovieButtons(modifier: Modifier = Modifier) {
 
         // My List Button
         NetflixRoundedButton(
-            label = "My List",
+            label = stringResource(R.string.my_list),
             icon = Icons.Default.Add,
             backgroundColor = NetflixGrey,
             contentColor = White,

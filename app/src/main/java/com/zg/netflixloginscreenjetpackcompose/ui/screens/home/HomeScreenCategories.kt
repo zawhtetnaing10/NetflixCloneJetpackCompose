@@ -16,13 +16,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.zg.netflixloginscreenjetpackcompose.R
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.CATEGORY_BUTTON_HEIGHT
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.HOME_SCREEN_CATEGORY_BORDER_WIDTH
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.MARGIN_CARD_MEDIUM_2
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.MARGIN_MEDIUM
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.MARGIN_MEDIUM_2
-import com.zg.netflixloginscreenjetpackcompose.ui.theme.MARGIN_MEDIUM_3
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.MARGIN_SMALL
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.NetflixCloneJetpackComposeTheme
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.NetflixSansFontFamily
@@ -39,7 +40,7 @@ fun HomeScreenCategories(modifier: Modifier = Modifier) {
         // TV Shows
         HomeScreenCategoryItem {
             Text(
-                "TV Shows", color = White,
+                stringResource(R.string.tv_shows), color = White,
                 fontFamily = NetflixSansFontFamily,
                 fontSize = TEXT_REGULAR,
                 modifier = Modifier.padding(end = MARGIN_MEDIUM)
@@ -49,7 +50,7 @@ fun HomeScreenCategories(modifier: Modifier = Modifier) {
         // Movies
         HomeScreenCategoryItem {
             Text(
-                "Movies", color = White,
+                stringResource(R.string.movies), color = White,
                 fontFamily = NetflixSansFontFamily,
                 fontSize = TEXT_REGULAR,
                 modifier = Modifier.padding(end = MARGIN_MEDIUM)
@@ -60,7 +61,7 @@ fun HomeScreenCategories(modifier: Modifier = Modifier) {
         HomeScreenCategoryItem {
             Row(horizontalArrangement = Arrangement.spacedBy(MARGIN_SMALL)) {
                 Text(
-                    "Categories", color = White,
+                    stringResource(R.string.categories), color = White,
                     fontFamily = NetflixSansFontFamily,
                     fontSize = TEXT_REGULAR,
                 )

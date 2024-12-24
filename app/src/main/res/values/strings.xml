@@ -11,4 +11,9 @@
     <string name="sign_in_protected_by_recaptcha">Sign is protected by Google reCAPTCHA to ensure you are not a robot.</string>
     <string name="learn_more"> Learn more.</string>
     <string name="or">OR</string>
+    <string name="tv_shows">TV Shows</string>
+    <string name="movies">Movies</string>
+    <string name="categories">Categories</string>
+    <string name="play">Play</string>
+    <string name="my_list">My List</string>
 </resources>
