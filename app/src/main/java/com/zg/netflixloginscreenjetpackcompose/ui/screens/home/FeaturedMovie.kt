@@ -3,15 +3,25 @@ package com.zg.netflixloginscreenjetpackcompose.ui.screens.home
 import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -24,9 +34,15 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.zg.netflixloginscreenjetpackcompose.R
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.FeaturedMovieGradient
+import com.zg.netflixloginscreenjetpackcompose.ui.theme.MARGIN_CARD_MEDIUM_2
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.MARGIN_LARGE
+import com.zg.netflixloginscreenjetpackcompose.ui.theme.MARGIN_MEDIUM
+import com.zg.netflixloginscreenjetpackcompose.ui.theme.MARGIN_MEDIUM_2
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.MARGIN_SMALL
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.NetflixCloneJetpackComposeTheme
+import com.zg.netflixloginscreenjetpackcompose.ui.theme.NetflixSansFontFamily
+import com.zg.netflixloginscreenjetpackcompose.ui.theme.TEXT_REGULAR
+import com.zg.netflixloginscreenjetpackcompose.ui.theme.White
 
 @Composable
 fun FeaturedMovie(modifier: Modifier = Modifier) {
@@ -54,6 +70,42 @@ fun FeaturedMovie(modifier: Modifier = Modifier) {
 
             // Gradient
             FeaturedMovieGradient(gradientOffset = gradientOffset)
+
+            Column(
+                modifier = Modifier.align(alignment = Alignment.BottomCenter)
+            ) {
+                // Genres
+                FeaturedMovieGenres()
+
+                // Play And My List Buttons
+            }
+        }
+    }
+}
+
+@Composable
+fun FeaturedMovieGenres(modifier: Modifier = Modifier) {
+
+    // TODO: - replace with real data after adding network layer
+    val dummyGenres = listOf("Suspenseful", "Emotional", "Drama")
+
+    Row(verticalAlignment = Alignment.CenterVertically, modifier = modifier) {
+        dummyGenres.forEachIndexed { index, genre ->
+            // Genre Name
+            Text(
+                genre,
+                color = White,
+                fontSize = TEXT_REGULAR,
+                fontFamily = NetflixSansFontFamily
+            )
+            // Dot separator
+            if (index < dummyGenres.count() - 1)
+                Box(modifier = Modifier
+                    .padding(horizontal = MARGIN_MEDIUM)
+                    .size(MARGIN_SMALL)
+                    .clip(CircleShape)
+                    .background(White))
+
         }
     }
 }
