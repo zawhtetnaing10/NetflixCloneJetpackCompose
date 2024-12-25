@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -13,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.zg.netflixloginscreenjetpackcompose.ui.resusable_composables.MobileGamesSection
+import com.zg.netflixloginscreenjetpackcompose.ui.resusable_composables.TitleAndHorizontalMovieListSection
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.Black
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.HOME_SCREEN_CATEGORIES_TOP_MARGIN
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.MARGIN_MEDIUM_2
@@ -60,6 +62,14 @@ fun HomeScreen(modifier: Modifier = Modifier) {
 
                     item{
                         Spacer(Modifier.height(MARGIN_MEDIUM_3))
+                    }
+
+                    // TODO: - Add Continue Watching Section
+
+                    // TODO: Replace with real movie lists
+                    items((1..10).toList()){
+                        // Horizontal Movie List
+                        TitleAndHorizontalMovieListSection()
                     }
                 }
             }
