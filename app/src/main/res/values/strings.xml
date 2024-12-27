@@ -17,4 +17,6 @@
     <string name="play">Play</string>
     <string name="my_list">My List</string>
     <string name="mobile_games">Mobile Games</string>
+    <string name="recently_added">Recently Added</string>
+    <string name="new_episodes">New Episodes</string>
 </resources>

@@ -60,16 +60,12 @@ fun HomeScreen(modifier: Modifier = Modifier) {
                         MobileGamesSection()
                     }
 
-                    item{
-                        Spacer(Modifier.height(MARGIN_MEDIUM_3))
-                    }
-
                     // TODO: - Add Continue Watching Section
 
                     // TODO: Replace with real movie lists
                     items((1..10).toList()){
                         // Horizontal Movie List
-                        TitleAndHorizontalMovieListSection()
+                        TitleAndHorizontalMovieListSection(modifier = Modifier.padding(top = MARGIN_MEDIUM_3))
                     }
                 }
             }
