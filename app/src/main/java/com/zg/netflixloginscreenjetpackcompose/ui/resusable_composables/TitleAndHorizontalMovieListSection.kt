@@ -2,10 +2,7 @@ package com.zg.netflixloginscreenjetpackcompose.ui.resusable_composables
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -20,7 +17,7 @@ import com.zg.netflixloginscreenjetpackcompose.ui.theme.TEXT_REGULAR_2X
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.White
 
 @Composable
-fun TitleAndHorizontalMovieListSection(title: String, content: @Composable () -> Unit, modifier: Modifier = Modifier) {
+fun TitleAndHorizontalMovieListSection(title: String, listItem: @Composable () -> Unit, modifier: Modifier = Modifier) {
     Column(verticalArrangement = Arrangement.spacedBy(MARGIN_MEDIUM), modifier = modifier) {
         Text(
             title,
@@ -32,7 +29,7 @@ fun TitleAndHorizontalMovieListSection(title: String, content: @Composable () ->
         )
         // Horizontal Movie List
         HorizontalMovieList{
-            content()
+            listItem()
         }
     }
 }
@@ -43,7 +40,7 @@ private fun TitleAndHorizontalMovieListSectionPreview() {
     NetflixCloneJetpackComposeTheme {
         TitleAndHorizontalMovieListSection(
             title = "Today's top picks for you",
-            content = {
+            listItem = {
                 MovieListItem()
             }
         )

@@ -11,3 +11,4 @@ val HintGrey = Color(red = 170, green = 170, blue = 170)
 
 val HomeScreenGradient = Color(red = 41, green = 79, blue = 83)
 val FeaturedMovieGradient = Black.copy(alpha = 0.5f)
+val ContinueWatchingBackground = Color(red = 22, green = 22, blue = 22)
