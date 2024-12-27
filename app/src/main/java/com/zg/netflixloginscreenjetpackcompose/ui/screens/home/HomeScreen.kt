@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.zg.netflixloginscreenjetpackcompose.ui.list_items.MovieListItem
 import com.zg.netflixloginscreenjetpackcompose.ui.resusable_composables.MobileGamesSection
 import com.zg.netflixloginscreenjetpackcompose.ui.resusable_composables.TitleAndHorizontalMovieListSection
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.Black
@@ -51,7 +52,7 @@ fun HomeScreen(modifier: Modifier = Modifier) {
                         FeaturedMovie()
                     }
 
-                    item{
+                    item {
                         Spacer(Modifier.height(MARGIN_MEDIUM_3))
                     }
 
@@ -63,9 +64,15 @@ fun HomeScreen(modifier: Modifier = Modifier) {
                     // TODO: - Add Continue Watching Section
 
                     // TODO: Replace with real movie lists
-                    items((1..10).toList()){
+                    items((1..10).toList()) {
                         // Horizontal Movie List
-                        TitleAndHorizontalMovieListSection(modifier = Modifier.padding(top = MARGIN_MEDIUM_3))
+                        TitleAndHorizontalMovieListSection(
+                            title = "Today's top picks for you",
+                            content = {
+                                MovieListItem()
+                            },
+                            modifier = Modifier.padding(top = MARGIN_MEDIUM_3)
+                        )
                     }
                 }
             }

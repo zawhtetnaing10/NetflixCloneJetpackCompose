@@ -20,10 +20,10 @@ import com.zg.netflixloginscreenjetpackcompose.ui.theme.TEXT_REGULAR_2X
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.White
 
 @Composable
-fun TitleAndHorizontalMovieListSection(modifier: Modifier = Modifier) {
+fun TitleAndHorizontalMovieListSection(title: String, content: @Composable () -> Unit, modifier: Modifier = Modifier) {
     Column(verticalArrangement = Arrangement.spacedBy(MARGIN_MEDIUM), modifier = modifier) {
         Text(
-            "Today's top picks for you",
+            title,
             color = White,
             fontWeight = FontWeight.Bold,
             fontSize = TEXT_REGULAR_2X,
@@ -31,19 +31,8 @@ fun TitleAndHorizontalMovieListSection(modifier: Modifier = Modifier) {
             modifier = Modifier.padding(horizontal = MARGIN_MEDIUM_2)
         )
         // Horizontal Movie List
-        HorizontalMovieList()
-    }
-}
-
-@Composable
-fun HorizontalMovieList(modifier: Modifier = Modifier) {
-    LazyRow(
-        horizontalArrangement = Arrangement.spacedBy(MARGIN_MEDIUM),
-        contentPadding = PaddingValues(horizontal = MARGIN_MEDIUM_2),
-        modifier = modifier
-    ) {
-        items((1..20).toList()) {
-            MovieListItem()
+        HorizontalMovieList{
+            content()
         }
     }
 }
@@ -52,6 +41,11 @@ fun HorizontalMovieList(modifier: Modifier = Modifier) {
 @Composable
 private fun TitleAndHorizontalMovieListSectionPreview() {
     NetflixCloneJetpackComposeTheme {
-        TitleAndHorizontalMovieListSection()
+        TitleAndHorizontalMovieListSection(
+            title = "Today's top picks for you",
+            content = {
+                MovieListItem()
+            }
+        )
     }
 }
