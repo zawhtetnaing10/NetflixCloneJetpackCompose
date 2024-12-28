@@ -8,6 +8,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.zg.netflixloginscreenjetpackcompose.ui.screens.home.HomeScreen
 import com.zg.netflixloginscreenjetpackcompose.ui.screens.login.NetflixLoginScreen
+import com.zg.netflixloginscreenjetpackcompose.ui.screens.movie_details.MovieDetailsScreen
 import kotlinx.serialization.Serializable
 
 @Composable
@@ -17,6 +18,7 @@ fun MainNavHost(navController: NavHostController = rememberNavController(), modi
         startDestination = NavRoutes.Login,
         modifier = modifier
     ) {
+        // Sign In
         composable<NavRoutes.Login>{
             NetflixLoginScreen(
                 onTapSignIn = {
@@ -24,10 +26,10 @@ fun MainNavHost(navController: NavHostController = rememberNavController(), modi
                 }
             )
         }
-
-        composable<NavRoutes.Home> {
-            HomeScreen()
-        }
+        // Home
+        composable<NavRoutes.Home> { HomeScreen() }
+        // MovieDetails
+        composable<NavRoutes.MovieDetails> { MovieDetailsScreen() }
     }
 }
 
@@ -38,4 +40,7 @@ sealed class NavRoutes {
 
     @Serializable
     object Home
+
+    @Serializable
+    object MovieDetails
 }
