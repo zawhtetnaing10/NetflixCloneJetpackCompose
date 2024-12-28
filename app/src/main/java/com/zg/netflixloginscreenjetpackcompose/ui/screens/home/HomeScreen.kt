@@ -26,7 +26,13 @@ import com.zg.netflixloginscreenjetpackcompose.ui.theme.NetflixCloneJetpackCompo
 @Composable
 fun HomeScreen(modifier: Modifier = Modifier) {
 
-    Scaffold(topBar = { HomeScreenAppbar() }, modifier = modifier) { paddingValues ->
+    Scaffold(
+        topBar = {
+            HomeScreenAppbar()
+        }, bottomBar = {
+            HomeScreenBottomNavigationBar()
+        }, modifier = modifier
+    ) { paddingValues ->
         Surface(
             color = Black,
             modifier = Modifier
@@ -52,17 +58,15 @@ fun HomeScreen(modifier: Modifier = Modifier) {
                     item {
                         FeaturedMovie()
                     }
-
+                    // Spacer
                     item {
                         Spacer(Modifier.height(MARGIN_MEDIUM_3))
                     }
-
                     // Mobile Games
                     item {
                         MobileGamesSection()
                     }
-
-                    // TODO: - Add Continue Watching Section
+                    // Continue Watching Section
                     item {
                         TitleAndHorizontalMovieListSection(
                             title = "Continue Watching",
@@ -72,7 +76,6 @@ fun HomeScreen(modifier: Modifier = Modifier) {
                             modifier = Modifier.padding(top = MARGIN_MEDIUM_3)
                         )
                     }
-
                     // TODO: Replace with real movie lists
                     items((1..10).toList()) {
                         // Horizontal Movie List

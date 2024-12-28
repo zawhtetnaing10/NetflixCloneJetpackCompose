@@ -19,4 +19,7 @@
     <string name="mobile_games">Mobile Games</string>
     <string name="recently_added">Recently Added</string>
     <string name="new_episodes">New Episodes</string>
+    <string name="home">Home</string>
+    <string name="new_and_hot">New &amp; Hot</string>
+    <string name="my_netflix">My Netflix</string>
 </resources>
