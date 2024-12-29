@@ -1,6 +1,7 @@
 package com.zg.netflixloginscreenjetpackcompose.ui.list_items
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -27,8 +28,8 @@ import com.zg.netflixloginscreenjetpackcompose.ui.theme.TEXT_SMALL_3X
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.White
 
 @Composable
-fun MovieListItem(modifier: Modifier = Modifier) {
-    Box(modifier = modifier) {
+fun MovieListItem(onTapMovie : () -> Unit, modifier: Modifier = Modifier) {
+    Box(modifier = modifier.clickable { onTapMovie() }) {
         // Image
         Surface(
             shape = RoundedCornerShape(MARGIN_MEDIUM)
@@ -63,6 +64,6 @@ fun MovieListItem(modifier: Modifier = Modifier) {
 @Composable
 private fun MovieListItemPreview() {
     NetflixCloneJetpackComposeTheme {
-        MovieListItem()
+        MovieListItem(onTapMovie = {})
     }
 }

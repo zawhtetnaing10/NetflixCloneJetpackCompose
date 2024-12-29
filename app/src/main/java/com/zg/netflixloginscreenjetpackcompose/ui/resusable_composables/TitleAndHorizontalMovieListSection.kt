@@ -41,7 +41,7 @@ private fun TitleAndHorizontalMovieListSectionPreview() {
         TitleAndHorizontalMovieListSection(
             title = "Today's top picks for you",
             listItem = {
-                MovieListItem()
+                MovieListItem(onTapMovie = {})
             }
         )
     }

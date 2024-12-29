@@ -49,8 +49,10 @@ import com.zg.netflixloginscreenjetpackcompose.ui.theme.TEXT_SMALL
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.White
 
 @Composable
-fun ContinueWatchingListItem(modifier: Modifier = Modifier) {
-    Column(modifier = modifier.width(HOME_SCREEN_MOVIE_IMAGE_WIDTH)) {
+fun ContinueWatchingListItem(onTapMovie: () -> Unit, modifier: Modifier = Modifier) {
+    Column(modifier = modifier
+        .width(HOME_SCREEN_MOVIE_IMAGE_WIDTH)
+        .clickable { onTapMovie() }) {
         // Image and Play Button
         ContinueWatchingImage()
         // Progress
@@ -147,7 +149,8 @@ fun ContinueWatchingButtons(modifier: Modifier = Modifier) {
                 Icons.Outlined.MoreVert,
                 tint = White,
                 contentDescription = null,
-                modifier = Modifier.size(MARGIN_LARGE_2X)
+                modifier = Modifier
+                    .size(MARGIN_LARGE_2X)
                     .clickable {
                         // TODO: - Send this event back to Parent and OpenBottomSheet
                     }
@@ -160,6 +163,6 @@ fun ContinueWatchingButtons(modifier: Modifier = Modifier) {
 @Composable
 private fun ContinueWatchingListItemPreview() {
     NetflixCloneJetpackComposeTheme {
-        ContinueWatchingListItem()
+        ContinueWatchingListItem(onTapMovie = {})
     }
 }

@@ -71,7 +71,7 @@ fun HomeScreen(onTapMovie: () -> Unit, modifier: Modifier = Modifier) {
                         TitleAndHorizontalMovieListSection(
                             title = "Continue Watching",
                             listItem = {
-                                ContinueWatchingListItem()
+                                ContinueWatchingListItem(onTapMovie = onTapMovie)
                             },
                             modifier = Modifier.padding(top = MARGIN_MEDIUM_3)
                         )
@@ -82,7 +82,7 @@ fun HomeScreen(onTapMovie: () -> Unit, modifier: Modifier = Modifier) {
                         TitleAndHorizontalMovieListSection(
                             title = "Today's top picks for you",
                             listItem = {
-                                MovieListItem()
+                                MovieListItem(onTapMovie = onTapMovie)
                             },
                             modifier = Modifier.padding(top = MARGIN_MEDIUM_3)
                         )

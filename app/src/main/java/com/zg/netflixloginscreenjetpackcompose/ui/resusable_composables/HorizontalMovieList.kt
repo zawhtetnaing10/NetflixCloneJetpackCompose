@@ -30,7 +30,7 @@ fun HorizontalMovieList(modifier: Modifier = Modifier, listItem: @Composable () 
 private fun HorizontalMovieListPreview() {
     NetflixCloneJetpackComposeTheme {
         HorizontalMovieList {
-            MovieListItem()
+            MovieListItem(onTapMovie = {})
         }
     }
 }
