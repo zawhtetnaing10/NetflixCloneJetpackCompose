@@ -22,7 +22,7 @@ fun VideoPlayer(modifier: Modifier = Modifier) {
     val context = LocalContext.current
     val exoPlayer: ExoPlayer = remember {
         ExoPlayer.Builder(context).build().apply {
-            val mediaItem = MediaItem.fromUri("https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4")
+            val mediaItem = MediaItem.fromUri("https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4") //TODO: - replace with real url
             setMediaItem(mediaItem)
             prepare()
             playWhenReady = true
@@ -47,9 +47,10 @@ fun VideoPlayer(modifier: Modifier = Modifier) {
 }
 
 // Calculate height for video player to keep the 16:9 aspect ratio.
+// width/height = 16/9 so height/width becomes 9/16 which equals to 0.5625
 private fun calculateHeightForAspectRatio(localConfiguration: Configuration): Dp {
     val availableScreenWidth = localConfiguration.screenWidthDp.dp
-    val aspectRatioReversed = 0.5625f
+    val aspectRatioReversed = 0.5625f // 9/16
 
     val calculatedHeight = availableScreenWidth * aspectRatioReversed
     return calculatedHeight
