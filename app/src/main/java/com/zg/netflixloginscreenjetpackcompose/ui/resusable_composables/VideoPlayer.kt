@@ -1,11 +1,16 @@
 package com.zg.netflixloginscreenjetpackcompose.ui.resusable_composables
 
+import android.content.res.Configuration
+import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.media3.common.MediaItem
 import androidx.media3.exoplayer.ExoPlayer
@@ -17,7 +22,7 @@ fun VideoPlayer(modifier: Modifier = Modifier) {
     val context = LocalContext.current
     val exoPlayer: ExoPlayer = remember {
         ExoPlayer.Builder(context).build().apply {
-            val mediaItem = MediaItem.fromUri("http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4")
+            val mediaItem = MediaItem.fromUri("https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4")
             setMediaItem(mediaItem)
             prepare()
             playWhenReady = true
@@ -34,11 +39,20 @@ fun VideoPlayer(modifier: Modifier = Modifier) {
     }
 
     AndroidView(
-        modifier = modifier,
+        modifier = modifier.height(calculateHeightForAspectRatio(LocalConfiguration.current)),
         factory = {
-            PlayerView(context).apply { player = exoPlayer }
+            PlayerView(it).apply { player = exoPlayer }
         }
     )
+}
+
+// Calculate height for video player to keep the 16:9 aspect ratio.
+private fun calculateHeightForAspectRatio(localConfiguration: Configuration): Dp {
+    val availableScreenWidth = localConfiguration.screenWidthDp.dp
+    val aspectRatioReversed = 0.5625f
+
+    val calculatedHeight = availableScreenWidth * aspectRatioReversed
+    return calculatedHeight
 }
 
 @Preview

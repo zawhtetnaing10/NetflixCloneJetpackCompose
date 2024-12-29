@@ -3,6 +3,7 @@ package com.zg.netflixloginscreenjetpackcompose.ui.screens.home
 import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -51,7 +52,7 @@ import com.zg.netflixloginscreenjetpackcompose.ui.theme.TEXT_REGULAR
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.White
 
 @Composable
-fun FeaturedMovie(modifier: Modifier = Modifier) {
+fun FeaturedMovie(onTapMovie: () -> Unit, modifier: Modifier = Modifier) {
 
     // Height of the card
     val calculatedHeight = getFeaturedMovieHeight(LocalConfiguration.current)
@@ -64,6 +65,9 @@ fun FeaturedMovie(modifier: Modifier = Modifier) {
             .fillMaxWidth()
             .padding(start = MARGIN_LARGE, end = MARGIN_LARGE)
             .height(getFeaturedMovieHeight(LocalConfiguration.current))
+            .clickable {
+                onTapMovie()
+            }
     ) {
         Box {
             // Image
@@ -187,6 +191,6 @@ private fun getFeaturedMovieHeight(localConfiguration: Configuration): Dp {
 @Composable
 private fun FeaturedMoviePreview() {
     NetflixCloneJetpackComposeTheme {
-        FeaturedMovie()
+        FeaturedMovie(onTapMovie = {})
     }
 }

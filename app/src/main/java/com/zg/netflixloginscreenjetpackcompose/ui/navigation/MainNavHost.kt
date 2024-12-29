@@ -19,7 +19,7 @@ fun MainNavHost(navController: NavHostController = rememberNavController(), modi
         modifier = modifier
     ) {
         // Sign In
-        composable<NavRoutes.Login>{
+        composable<NavRoutes.Login> {
             NetflixLoginScreen(
                 onTapSignIn = {
                     navController.navigate(NavRoutes.Home)
@@ -27,7 +27,11 @@ fun MainNavHost(navController: NavHostController = rememberNavController(), modi
             )
         }
         // Home
-        composable<NavRoutes.Home> { HomeScreen() }
+        composable<NavRoutes.Home> {
+            HomeScreen(onTapMovie = {
+                navController.navigate(NavRoutes.MovieDetails)
+            })
+        }
         // MovieDetails
         composable<NavRoutes.MovieDetails> { MovieDetailsScreen() }
     }

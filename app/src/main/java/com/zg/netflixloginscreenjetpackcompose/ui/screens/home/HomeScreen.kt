@@ -24,7 +24,7 @@ import com.zg.netflixloginscreenjetpackcompose.ui.theme.MARGIN_MEDIUM_3
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.NetflixCloneJetpackComposeTheme
 
 @Composable
-fun HomeScreen(modifier: Modifier = Modifier) {
+fun HomeScreen(onTapMovie: () -> Unit, modifier: Modifier = Modifier) {
 
     Scaffold(
         topBar = {
@@ -56,7 +56,7 @@ fun HomeScreen(modifier: Modifier = Modifier) {
                 LazyColumn(modifier = Modifier.padding(top = 140.dp)) {
                     // Featured Movie
                     item {
-                        FeaturedMovie()
+                        FeaturedMovie(onTapMovie = onTapMovie)
                     }
                     // Spacer
                     item {
@@ -97,6 +97,6 @@ fun HomeScreen(modifier: Modifier = Modifier) {
 @Composable
 private fun HomeScreenPreview() {
     NetflixCloneJetpackComposeTheme {
-        HomeScreen()
+        HomeScreen(onTapMovie = {})
     }
 }
