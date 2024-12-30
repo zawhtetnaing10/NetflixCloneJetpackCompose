@@ -31,6 +31,8 @@ import com.zg.netflixloginscreenjetpackcompose.ui.theme.MARGIN_MEDIUM_2
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.NetflixCloneJetpackComposeTheme
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.NetflixGrey
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.NetflixSansFontFamily
+import com.zg.netflixloginscreenjetpackcompose.ui.theme.TEXT_REGULAR
+import com.zg.netflixloginscreenjetpackcompose.ui.theme.TEXT_SMALL
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.White
 import com.zg.netflixloginscreenjetpackcompose.ui.utils.IconSource
 
@@ -55,7 +57,9 @@ fun MovieDetailsContent(modifier: Modifier = Modifier) {
 
 @Composable
 fun MovieDetailsBody(modifier: Modifier = Modifier) {
-    Column(modifier = modifier.padding(MARGIN_MEDIUM_2).verticalScroll(rememberScrollState())) {
+    Column(modifier = modifier
+        .padding(MARGIN_MEDIUM_2)
+        .verticalScroll(rememberScrollState())) {
         // Movie Name & Netflix Logo
         NetflixFilmLogo()
         // Spacer
@@ -67,24 +71,38 @@ fun MovieDetailsBody(modifier: Modifier = Modifier) {
         // Movie Release Info
         MovieReleaseInfo()
         Spacer(Modifier.height(MARGIN_MEDIUM_2))
-        Column(Modifier.fillMaxWidth()) {
-            NetflixRoundedButton(
-                label = stringResource(R.string.play),
-                icon = IconSource.VectorSource(Icons.Default.PlayArrow),
-                backgroundColor = White,
-                contentColor = Black,
-                onButtonClicked = {},
-                modifier = Modifier.fillMaxWidth()
-            )
-            NetflixRoundedButton(
-                label = stringResource(R.string.download),
-                icon = IconSource.PainterSource(painterResource(R.drawable.download)),
-                backgroundColor = NetflixGrey,
-                contentColor = White,
-                onButtonClicked = {},
-                modifier = Modifier.fillMaxWidth()
-            )
-        }
+        PlayAndDownloadButtons()
+        Spacer(Modifier.height(MARGIN_MEDIUM_2))
+        Text(
+            "A crowded airport. A dangerous suitcase. A mysterious criminal mastermind. On Christmas Eve, a security officer faces the ultimate travel nightmare.",
+            color = White,
+            fontFamily = NetflixSansFontFamily,
+            fontWeight = FontWeight.Normal,
+            fontSize = TEXT_REGULAR,
+            maxLines = 3,
+        )
+    }
+}
+
+@Composable
+fun PlayAndDownloadButtons(modifier: Modifier = Modifier) {
+    Column(modifier.fillMaxWidth()) {
+        NetflixRoundedButton(
+            label = stringResource(R.string.play),
+            icon = IconSource.VectorSource(Icons.Default.PlayArrow),
+            backgroundColor = White,
+            contentColor = Black,
+            onButtonClicked = {},
+            modifier = Modifier.fillMaxWidth()
+        )
+        NetflixRoundedButton(
+            label = stringResource(R.string.download),
+            icon = IconSource.PainterSource(painterResource(R.drawable.download)),
+            backgroundColor = NetflixGrey,
+            contentColor = White,
+            onButtonClicked = {},
+            modifier = Modifier.fillMaxWidth()
+        )
     }
 }
 
