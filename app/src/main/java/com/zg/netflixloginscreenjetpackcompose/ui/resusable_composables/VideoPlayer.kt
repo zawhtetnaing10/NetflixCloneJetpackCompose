@@ -1,6 +1,7 @@
 package com.zg.netflixloginscreenjetpackcompose.ui.resusable_composables
 
 import android.content.res.Configuration
+import androidx.annotation.OptIn
 import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -13,10 +14,12 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.media3.common.MediaItem
+import androidx.media3.common.util.UnstableApi
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.ui.PlayerView
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.NetflixCloneJetpackComposeTheme
 
+@OptIn(UnstableApi::class)
 @Composable
 fun VideoPlayer(modifier: Modifier = Modifier) {
     val context = LocalContext.current
@@ -25,7 +28,7 @@ fun VideoPlayer(modifier: Modifier = Modifier) {
             val mediaItem = MediaItem.fromUri("https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4") //TODO: - replace with real url
             setMediaItem(mediaItem)
             prepare()
-            playWhenReady = false
+            playWhenReady = true
         }
     }
 
@@ -41,7 +44,9 @@ fun VideoPlayer(modifier: Modifier = Modifier) {
     AndroidView(
         modifier = modifier.height(calculateHeightForAspectRatio(LocalConfiguration.current)),
         factory = {
-            PlayerView(it).apply { player = exoPlayer }
+            PlayerView(it).apply {
+                player = exoPlayer
+            }
         }
     )
 }

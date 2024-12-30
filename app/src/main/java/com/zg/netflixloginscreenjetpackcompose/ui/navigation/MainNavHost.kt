@@ -33,7 +33,11 @@ fun MainNavHost(navController: NavHostController = rememberNavController(), modi
             })
         }
         // MovieDetails
-        composable<NavRoutes.MovieDetails> { MovieDetailsScreen() }
+        composable<NavRoutes.MovieDetails> {
+            MovieDetailsScreen(onTapBack = {
+                navController.navigateUp()
+            })
+        }
     }
 }
 

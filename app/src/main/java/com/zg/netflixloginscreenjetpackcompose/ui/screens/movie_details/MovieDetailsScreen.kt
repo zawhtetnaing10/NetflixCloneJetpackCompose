@@ -1,21 +1,28 @@
 package com.zg.netflixloginscreenjetpackcompose.ui.screens.movie_details
 
-import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -29,6 +36,7 @@ import com.zg.netflixloginscreenjetpackcompose.ui.theme.Black
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.MARGIN_LARGE
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.MARGIN_MEDIUM
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.MARGIN_MEDIUM_2
+import com.zg.netflixloginscreenjetpackcompose.ui.theme.MARGIN_XLARGE
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.NetflixCloneJetpackComposeTheme
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.NetflixGrey
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.NetflixSansFontFamily
@@ -37,10 +45,32 @@ import com.zg.netflixloginscreenjetpackcompose.ui.theme.White
 import com.zg.netflixloginscreenjetpackcompose.ui.utils.IconSource
 
 @Composable
-fun MovieDetailsScreen(modifier: Modifier = Modifier) {
-    Scaffold(modifier = modifier.fillMaxSize()) { paddingValues ->
+fun MovieDetailsScreen(onTapBack: () -> Unit, modifier: Modifier = Modifier) {
+    Scaffold(topBar = { MovieDetailsAppbar(onTapBack = onTapBack) }, modifier = modifier.fillMaxSize()) { paddingValues ->
         MovieDetailsContent(modifier = Modifier.padding(bottom = paddingValues.calculateBottomPadding()))
     }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun MovieDetailsAppbar(onTapBack: () -> Unit, modifier: Modifier = Modifier) {
+    TopAppBar(
+        title = {},
+        navigationIcon = {
+            IconButton(onClick = onTapBack) {
+                Icon(
+                    Icons.AutoMirrored.Default.KeyboardArrowLeft,
+                    tint = White,
+                    contentDescription = null,
+                    modifier = Modifier.size(MARGIN_XLARGE)
+                )
+            }
+        },
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = Color.Transparent
+        ),
+        modifier = modifier,
+    )
 }
 
 @Composable
@@ -119,6 +149,6 @@ fun PlayAndDownloadButtons(modifier: Modifier = Modifier) {
 @Composable
 private fun MovieDetailsScreenPreview() {
     NetflixCloneJetpackComposeTheme {
-        MovieDetailsScreen()
+        MovieDetailsScreen(onTapBack = {})
     }
 }
