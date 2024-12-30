@@ -1,5 +1,6 @@
 package com.zg.netflixloginscreenjetpackcompose.ui.screens.movie_details
 
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -55,9 +56,11 @@ fun MovieDetailsContent(modifier: Modifier = Modifier) {
 
 @Composable
 fun MovieDetailsBody(modifier: Modifier = Modifier) {
-    Column(modifier = modifier
-        .padding(MARGIN_MEDIUM_2)
-        .verticalScroll(rememberScrollState())) {
+    Column(
+        modifier = modifier
+            .padding(MARGIN_MEDIUM_2)
+            .verticalScroll(rememberScrollState())
+    ) {
         // Movie Name & Netflix Logo
         NetflixFilmLogo()
         // Spacer
@@ -69,6 +72,7 @@ fun MovieDetailsBody(modifier: Modifier = Modifier) {
         // Movie Release Info
         MovieReleaseInfo()
         Spacer(Modifier.height(MARGIN_MEDIUM_2))
+        // Play and Download Buttons
         PlayAndDownloadButtons()
         Spacer(Modifier.height(MARGIN_MEDIUM_2))
         Text(
@@ -79,6 +83,9 @@ fun MovieDetailsBody(modifier: Modifier = Modifier) {
             fontSize = TEXT_REGULAR,
             maxLines = 3,
         )
+        Spacer(Modifier.height(MARGIN_MEDIUM_2))
+        // Actors And Directors
+        ActorsAndDirector(onTapMoreActors = { })
     }
 }
 

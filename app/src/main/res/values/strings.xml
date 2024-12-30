@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">NetflixLoginScreenJetpackCompose</string>
     <string name="email_or_phone_number_placeholder">Email or phone number</string>
     <string name="help">Help</string>
@@ -24,4 +24,5 @@
     <string name="my_netflix">My Netflix</string>
     <string name="film">FILM</string>
     <string name="download">Download</string>
+    <string name="more" tools:ignore="TypographyEllipsis"> ... more</string>
 </resources>
