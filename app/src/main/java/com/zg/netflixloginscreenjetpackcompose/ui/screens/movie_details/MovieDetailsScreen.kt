@@ -8,22 +8,31 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import com.zg.netflixloginscreenjetpackcompose.R
 import com.zg.netflixloginscreenjetpackcompose.ui.resusable_composables.MovieReleaseInfo
 import com.zg.netflixloginscreenjetpackcompose.ui.resusable_composables.NetflixFilmLogo
+import com.zg.netflixloginscreenjetpackcompose.ui.resusable_composables.NetflixPrimaryButton
+import com.zg.netflixloginscreenjetpackcompose.ui.resusable_composables.NetflixRoundedButton
 import com.zg.netflixloginscreenjetpackcompose.ui.resusable_composables.VideoPlayer
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.Black
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.MARGIN_MEDIUM
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.MARGIN_MEDIUM_2
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.NetflixCloneJetpackComposeTheme
+import com.zg.netflixloginscreenjetpackcompose.ui.theme.NetflixGrey
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.NetflixSansFontFamily
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.White
+import com.zg.netflixloginscreenjetpackcompose.ui.utils.IconSource
 
 @Composable
 fun MovieDetailsScreen(modifier: Modifier = Modifier) {
@@ -57,6 +66,25 @@ fun MovieDetailsBody(modifier: Modifier = Modifier) {
         Spacer(Modifier.height(MARGIN_MEDIUM))
         // Movie Release Info
         MovieReleaseInfo()
+        Spacer(Modifier.height(MARGIN_MEDIUM_2))
+        Column(Modifier.fillMaxWidth()) {
+            NetflixRoundedButton(
+                label = stringResource(R.string.play),
+                icon = IconSource.VectorSource(Icons.Default.PlayArrow),
+                backgroundColor = White,
+                contentColor = Black,
+                onButtonClicked = {},
+                modifier = Modifier.fillMaxWidth()
+            )
+            NetflixRoundedButton(
+                label = stringResource(R.string.download),
+                icon = IconSource.PainterSource(painterResource(R.drawable.download)),
+                backgroundColor = NetflixGrey,
+                contentColor = White,
+                onButtonClicked = {},
+                modifier = Modifier.fillMaxWidth()
+            )
+        }
     }
 }
 

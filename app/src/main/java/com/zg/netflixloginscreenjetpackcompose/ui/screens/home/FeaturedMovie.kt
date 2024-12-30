@@ -50,6 +50,7 @@ import com.zg.netflixloginscreenjetpackcompose.ui.theme.NetflixGrey
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.NetflixSansFontFamily
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.TEXT_REGULAR
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.White
+import com.zg.netflixloginscreenjetpackcompose.ui.utils.IconSource
 
 @Composable
 fun FeaturedMovie(onTapMovie: () -> Unit, modifier: Modifier = Modifier) {
@@ -108,7 +109,7 @@ fun FeaturedMovieButtons(modifier: Modifier = Modifier) {
         // Play Button
         NetflixRoundedButton(
             label = stringResource(R.string.play),
-            icon = Icons.Default.PlayArrow,
+            icon = IconSource.VectorSource(Icons.Default.PlayArrow),
             backgroundColor = White,
             contentColor = Black,
             onButtonClicked = {},
@@ -118,7 +119,7 @@ fun FeaturedMovieButtons(modifier: Modifier = Modifier) {
         // My List Button
         NetflixRoundedButton(
             label = stringResource(R.string.my_list),
-            icon = Icons.Default.Add,
+            icon = IconSource.VectorSource(Icons.Default.Add),
             backgroundColor = NetflixGrey,
             contentColor = White,
             onButtonClicked = {},

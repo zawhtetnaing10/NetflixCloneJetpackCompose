@@ -27,11 +27,12 @@ import com.zg.netflixloginscreenjetpackcompose.ui.theme.NetflixCloneJetpackCompo
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.NetflixSansFontFamily
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.TEXT_REGULAR_2X
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.White
+import com.zg.netflixloginscreenjetpackcompose.ui.utils.IconSource
 
 @Composable
 fun NetflixRoundedButton(
     label: String,
-    icon: ImageVector,
+    icon: IconSource,
     backgroundColor : Color,
     contentColor : Color,
     onButtonClicked: () -> Unit,
@@ -42,17 +43,29 @@ fun NetflixRoundedButton(
         colors = ButtonDefaults.buttonColors(
             containerColor = backgroundColor,
         ),
-        shape = RoundedCornerShape(MARGIN_MEDIUM),
+        shape = RoundedCornerShape(MARGIN_SMALL),
         contentPadding = PaddingValues(vertical = MARGIN_SMALL, horizontal = MARGIN_LARGE),
         modifier = modifier
     ) {
         Row(horizontalArrangement = Arrangement.spacedBy(MARGIN_SMALL), verticalAlignment = Alignment.CenterVertically) {
-            Icon(
-                icon,
-                contentDescription = null,
-                tint = contentColor,
-                modifier = Modifier.size(MARGIN_XLARGE)
-            )
+            when(icon){
+                is IconSource.VectorSource -> {
+                    Icon(
+                        icon.vector,
+                        contentDescription = null,
+                        tint = contentColor,
+                        modifier = Modifier.size(MARGIN_XLARGE)
+                    )
+                }
+                is IconSource.PainterSource -> {
+                    Icon(
+                        icon.painter,
+                        contentDescription = null,
+                        tint = contentColor,
+                        modifier = Modifier.size(MARGIN_LARGE)
+                    )
+                }
+            }
 
             Text(
                 label,
@@ -69,6 +82,6 @@ fun NetflixRoundedButton(
 @Composable
 private fun NetflixWhiteButtonPreview() {
     NetflixCloneJetpackComposeTheme {
-        NetflixRoundedButton(label = "Play", icon = Icons.Default.PlayArrow, backgroundColor = White, contentColor = Black, onButtonClicked = {})
+        NetflixRoundedButton(label = "Play", icon = IconSource.VectorSource(vector = Icons.Default.PlayArrow), backgroundColor = White, contentColor = Black, onButtonClicked = {})
     }
 }
