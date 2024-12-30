@@ -22,7 +22,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.zg.netflixloginscreenjetpackcompose.R
 import com.zg.netflixloginscreenjetpackcompose.ui.resusable_composables.MovieReleaseInfo
 import com.zg.netflixloginscreenjetpackcompose.ui.resusable_composables.NetflixFilmLogo
-import com.zg.netflixloginscreenjetpackcompose.ui.resusable_composables.NetflixPrimaryButton
 import com.zg.netflixloginscreenjetpackcompose.ui.resusable_composables.NetflixRoundedButton
 import com.zg.netflixloginscreenjetpackcompose.ui.resusable_composables.VideoPlayer
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.Black
@@ -32,7 +31,6 @@ import com.zg.netflixloginscreenjetpackcompose.ui.theme.NetflixCloneJetpackCompo
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.NetflixGrey
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.NetflixSansFontFamily
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.TEXT_REGULAR
-import com.zg.netflixloginscreenjetpackcompose.ui.theme.TEXT_SMALL
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.White
 import com.zg.netflixloginscreenjetpackcompose.ui.utils.IconSource
 
