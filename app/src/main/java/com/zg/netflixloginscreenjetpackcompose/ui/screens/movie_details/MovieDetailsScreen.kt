@@ -26,6 +26,7 @@ import com.zg.netflixloginscreenjetpackcompose.ui.resusable_composables.NetflixF
 import com.zg.netflixloginscreenjetpackcompose.ui.resusable_composables.NetflixRoundedButton
 import com.zg.netflixloginscreenjetpackcompose.ui.resusable_composables.VideoPlayer
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.Black
+import com.zg.netflixloginscreenjetpackcompose.ui.theme.MARGIN_LARGE
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.MARGIN_MEDIUM
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.MARGIN_MEDIUM_2
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.NetflixCloneJetpackComposeTheme
@@ -86,6 +87,9 @@ fun MovieDetailsBody(modifier: Modifier = Modifier) {
         Spacer(Modifier.height(MARGIN_MEDIUM_2))
         // Actors And Directors
         ActorsAndDirector(onTapMoreActors = { })
+        Spacer(Modifier.height(MARGIN_LARGE))
+        // Action Buttons
+        MovieDetailsActionButtons()
     }
 }
 

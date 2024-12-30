@@ -119,7 +119,7 @@ fun FeaturedMovieButtons(modifier: Modifier = Modifier) {
         // My List Button
         NetflixRoundedButton(
             label = stringResource(R.string.my_list),
-            icon = IconSource.VectorSource(Icons.Default.Add),
+            icon = IconSource.PainterSource(painterResource(R.drawable.add)),
             backgroundColor = NetflixGrey,
             contentColor = White,
             onButtonClicked = {},

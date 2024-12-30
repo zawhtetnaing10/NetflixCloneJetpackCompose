@@ -25,7 +25,7 @@ fun VideoPlayer(modifier: Modifier = Modifier) {
             val mediaItem = MediaItem.fromUri("https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4") //TODO: - replace with real url
             setMediaItem(mediaItem)
             prepare()
-            playWhenReady = true
+            playWhenReady = false
         }
     }
 
