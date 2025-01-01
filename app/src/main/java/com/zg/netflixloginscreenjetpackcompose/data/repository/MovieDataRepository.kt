@@ -1,5 +1,9 @@
 package com.zg.netflixloginscreenjetpackcompose.data.repository
 
-object MovieDataRepository{
+/**
+ * Data repository for the app
+ * Communicates with both Network and Persistence Layers
+ */
+class MovieDataRepository{
 
 }

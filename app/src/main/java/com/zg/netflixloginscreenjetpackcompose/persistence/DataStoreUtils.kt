@@ -1,5 +1,51 @@
 package com.zg.netflixloginscreenjetpackcompose.persistence
 
-class DataStoreUtils{
-    // TODO: - Add code for Data store
+import android.content.Context
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.stringPreferencesKey
+import androidx.datastore.preferences.preferencesDataStore
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
+
+/**
+ * Name of the DataStore
+ */
+const val MOVIE_DATA_STORE_NAME = "moviedb_data_store"
+/**
+ * Data Store instance which will be used for storing key value data
+ */
+private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = MOVIE_DATA_STORE_NAME)
+
+// TODO: - Use Hilt DI to inject into Repository
+/**
+ * This class will be used by the Repository to store and retrieve key value data from persistence
+ */
+class DataStoreUtils(context: Context) {
+    /**
+     * Initialize Data store
+     */
+    private val dataStore = context.dataStore
+
+    /**
+     * Keys for Data Store
+     */
+    private val kMovieDbApiKey = stringPreferencesKey("movie_db_api_key")
+
+    /**
+     * Retrieve api key from DataStore
+     */
+    val apiKey: Flow<String> = dataStore.data
+        .map { preferences ->
+            preferences[kMovieDbApiKey] ?: ""
+        }
+
+    /**
+     * Saves api key to the data store
+     * @param apiKey new apiKey to be saved
+     */
+    suspend fun saveApiKey(apiKey: String) {
+        dataStore.edit { it[kMovieDbApiKey] = apiKey }
+    }
 }
