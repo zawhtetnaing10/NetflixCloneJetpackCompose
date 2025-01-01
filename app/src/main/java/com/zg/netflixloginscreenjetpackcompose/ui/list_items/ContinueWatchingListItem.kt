@@ -26,7 +26,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -36,7 +35,7 @@ import com.zg.netflixloginscreenjetpackcompose.ui.theme.Black
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.CONTINUE_WATCHING_PLAY_BUTTON_SIZE
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.CONTINUE_WATCHING_PLAY_ICON_SIZE
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.ContinueWatchingBackground
-import com.zg.netflixloginscreenjetpackcompose.ui.theme.HOME_SCREEN_MOVIE_IMAGE_HEIGHT
+import com.zg.netflixloginscreenjetpackcompose.ui.theme.MOVIE_IMAGE_HEIGHT
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.HOME_SCREEN_MOVIE_IMAGE_WIDTH
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.MARGIN_LARGE_2X
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.MARGIN_MEDIUM
@@ -71,7 +70,7 @@ fun ContinueWatchingImage(modifier: Modifier = Modifier) {
         ) {
             Image(
                 painterResource(R.drawable.bleach), contentDescription = null,
-                modifier = Modifier.size(width = HOME_SCREEN_MOVIE_IMAGE_WIDTH, height = HOME_SCREEN_MOVIE_IMAGE_HEIGHT)
+                modifier = Modifier.size(width = HOME_SCREEN_MOVIE_IMAGE_WIDTH, height = MOVIE_IMAGE_HEIGHT)
             )
         }
 

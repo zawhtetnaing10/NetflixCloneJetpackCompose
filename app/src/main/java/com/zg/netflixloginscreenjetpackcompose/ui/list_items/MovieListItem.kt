@@ -16,7 +16,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import com.zg.netflixloginscreenjetpackcompose.R
-import com.zg.netflixloginscreenjetpackcompose.ui.theme.HOME_SCREEN_MOVIE_IMAGE_HEIGHT
+import com.zg.netflixloginscreenjetpackcompose.ui.theme.MOVIE_IMAGE_HEIGHT
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.HOME_SCREEN_MOVIE_IMAGE_WIDTH
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.HOME_SCREEN_SUB_TEXT_WIDTH
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.LINE_HEIGHT_SMALL
@@ -36,7 +36,7 @@ fun MovieListItem(onTapMovie : () -> Unit, modifier: Modifier = Modifier) {
         ) {
             Image(
                 painterResource(R.drawable.gladiator_photo), contentDescription = null,
-                modifier = Modifier.size(width = HOME_SCREEN_MOVIE_IMAGE_WIDTH, height = HOME_SCREEN_MOVIE_IMAGE_HEIGHT)
+                modifier = Modifier.size(width = HOME_SCREEN_MOVIE_IMAGE_WIDTH, height = MOVIE_IMAGE_HEIGHT)
             )
         }
 

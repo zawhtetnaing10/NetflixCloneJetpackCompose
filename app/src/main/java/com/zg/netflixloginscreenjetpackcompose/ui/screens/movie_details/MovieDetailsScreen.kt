@@ -1,12 +1,18 @@
 package com.zg.netflixloginscreenjetpackcompose.ui.screens.movie_details
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -27,7 +33,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.zg.netflixloginscreenjetpackcompose.R
+import com.zg.netflixloginscreenjetpackcompose.ui.list_items.MovieListItem
 import com.zg.netflixloginscreenjetpackcompose.ui.resusable_composables.MovieReleaseInfo
 import com.zg.netflixloginscreenjetpackcompose.ui.resusable_composables.NetflixFilmLogo
 import com.zg.netflixloginscreenjetpackcompose.ui.resusable_composables.NetflixRoundedButton
@@ -38,12 +46,14 @@ import com.zg.netflixloginscreenjetpackcompose.ui.theme.MARGIN_LARGE
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.MARGIN_MEDIUM
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.MARGIN_MEDIUM_2
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.MARGIN_XLARGE
+import com.zg.netflixloginscreenjetpackcompose.ui.theme.MOVIE_IMAGE_HEIGHT
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.NetflixCloneJetpackComposeTheme
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.NetflixGrey
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.NetflixSansFontFamily
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.TEXT_REGULAR
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.White
 import com.zg.netflixloginscreenjetpackcompose.ui.utils.IconSource
+import com.zg.netflixloginscreenjetpackcompose.ui.utils.calculateHeightForGrid
 
 @Composable
 fun MovieDetailsScreen(onTapBack: () -> Unit, modifier: Modifier = Modifier) {
@@ -92,41 +102,63 @@ fun MovieDetailsContent(tabs: List<String>, modifier: Modifier = Modifier) {
 
 @Composable
 fun MovieDetailsBody(tabs: List<String>, modifier: Modifier = Modifier) {
-    Column(
+    LazyColumn(
         modifier = modifier
             .padding(MARGIN_MEDIUM_2)
-            .verticalScroll(rememberScrollState())
     ) {
         // Movie Name & Netflix Logo
-        NetflixFilmLogo()
+        item { NetflixFilmLogo() }
+
         // Spacer
-        Spacer(Modifier.height(MARGIN_MEDIUM))
+        item { Spacer(Modifier.height(MARGIN_MEDIUM)) }
         // Movie Name
-        Text("Carry On", color = White, fontFamily = NetflixSansFontFamily, fontWeight = FontWeight.Bold)
+        item { Text("Carry On", color = White, fontFamily = NetflixSansFontFamily, fontWeight = FontWeight.Bold) }
         // Spacer
-        Spacer(Modifier.height(MARGIN_MEDIUM))
+        item { Spacer(Modifier.height(MARGIN_MEDIUM)) }
         // Movie Release Info
-        MovieReleaseInfo()
-        Spacer(Modifier.height(MARGIN_MEDIUM_2))
+        item { MovieReleaseInfo() }
+        item { Spacer(Modifier.height(MARGIN_MEDIUM_2)) }
         // Play and Download Buttons
-        PlayAndDownloadButtons()
-        Spacer(Modifier.height(MARGIN_MEDIUM_2))
-        Text(
-            "A crowded airport. A dangerous suitcase. A mysterious criminal mastermind. On Christmas Eve, a security officer faces the ultimate travel nightmare.",
-            color = White,
-            fontFamily = NetflixSansFontFamily,
-            fontWeight = FontWeight.Normal,
-            fontSize = TEXT_REGULAR,
-            maxLines = 3,
-        )
-        Spacer(Modifier.height(MARGIN_MEDIUM_2))
-        // Actors And Directors
-        ActorsAndDirector(onTapMoreActors = { })
-        Spacer(Modifier.height(MARGIN_LARGE))
+        item { PlayAndDownloadButtons() }
+        item { Spacer(Modifier.height(MARGIN_MEDIUM_2)) }
+        item {
+            Text(
+                "A crowded airport. A dangerous suitcase. A mysterious criminal mastermind. On Christmas Eve, a security officer faces the ultimate travel nightmare.",
+                color = White,
+                fontFamily = NetflixSansFontFamily,
+                fontWeight = FontWeight.Normal,
+                fontSize = TEXT_REGULAR,
+                maxLines = 3,
+            )
+        }
+        item { Spacer(Modifier.height(MARGIN_MEDIUM_2)) }
+        item {
+            // Actors And Directors
+            ActorsAndDirector(onTapMoreActors = { })
+        }
+        item { Spacer(Modifier.height(MARGIN_LARGE)) }
         // Action Buttons
-        MovieDetailsActionButtons()
-        Spacer(Modifier.height(MARGIN_LARGE))
-        NetflixTabBar(tabs)
+        item { MovieDetailsActionButtons() }
+        item {
+            Spacer(Modifier.height(MARGIN_LARGE))
+        }
+        item {
+            NetflixTabBar(tabs)
+        }
+        item {
+            // Grid
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(3),
+                verticalArrangement = Arrangement.spacedBy(MARGIN_MEDIUM_2),
+                contentPadding = PaddingValues(vertical = MARGIN_LARGE),
+                // TODO: - replace with real data from view model
+                modifier = Modifier.height(calculateHeightForGrid(noOfItems = 12, noOfColumns = 3, heightPerItem = MOVIE_IMAGE_HEIGHT + MARGIN_LARGE)) // Added a bit more height to avoid nested scrolling
+            ) {
+                items((1..12).toList()) {
+                    MovieListItem(onTapMovie = {})
+                }
+            }
+        }
     }
 }
 
