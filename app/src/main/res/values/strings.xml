@@ -27,4 +27,6 @@
     <string name="more" tools:ignore="TypographyEllipsis"> ... more</string>
     <string name="rate">Rate</string>
     <string name="share">Share</string>
+    <string name="more_like_this">More Like This</string>
+    <string name="trailers_and_more">Trailers and More</string>
 </resources>

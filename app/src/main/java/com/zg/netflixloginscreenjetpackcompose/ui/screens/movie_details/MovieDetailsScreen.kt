@@ -31,6 +31,7 @@ import com.zg.netflixloginscreenjetpackcompose.R
 import com.zg.netflixloginscreenjetpackcompose.ui.resusable_composables.MovieReleaseInfo
 import com.zg.netflixloginscreenjetpackcompose.ui.resusable_composables.NetflixFilmLogo
 import com.zg.netflixloginscreenjetpackcompose.ui.resusable_composables.NetflixRoundedButton
+import com.zg.netflixloginscreenjetpackcompose.ui.resusable_composables.NetflixTabBar
 import com.zg.netflixloginscreenjetpackcompose.ui.resusable_composables.VideoPlayer
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.Black
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.MARGIN_LARGE
@@ -46,8 +47,12 @@ import com.zg.netflixloginscreenjetpackcompose.ui.utils.IconSource
 
 @Composable
 fun MovieDetailsScreen(onTapBack: () -> Unit, modifier: Modifier = Modifier) {
+
+    // TODO: - Move this to ViewModel
+    val movieDetailsScreenTabs = listOf(stringResource(R.string.more_like_this), stringResource(R.string.trailers_and_more))
+
     Scaffold(topBar = { MovieDetailsAppbar(onTapBack = onTapBack) }, modifier = modifier.fillMaxSize()) { paddingValues ->
-        MovieDetailsContent(modifier = Modifier.padding(bottom = paddingValues.calculateBottomPadding()))
+        MovieDetailsContent(tabs = movieDetailsScreenTabs, modifier = Modifier.padding(bottom = paddingValues.calculateBottomPadding()))
     }
 }
 
@@ -74,19 +79,19 @@ fun MovieDetailsAppbar(onTapBack: () -> Unit, modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun MovieDetailsContent(modifier: Modifier = Modifier) {
+fun MovieDetailsContent(tabs: List<String>, modifier: Modifier = Modifier) {
     Surface(color = Black, modifier = modifier.fillMaxSize()) {
         Column {
             // Video Player
             VideoPlayer(modifier = Modifier.fillMaxWidth())
             // Body
-            MovieDetailsBody()
+            MovieDetailsBody(tabs = tabs)
         }
     }
 }
 
 @Composable
-fun MovieDetailsBody(modifier: Modifier = Modifier) {
+fun MovieDetailsBody(tabs: List<String>, modifier: Modifier = Modifier) {
     Column(
         modifier = modifier
             .padding(MARGIN_MEDIUM_2)
@@ -120,6 +125,8 @@ fun MovieDetailsBody(modifier: Modifier = Modifier) {
         Spacer(Modifier.height(MARGIN_LARGE))
         // Action Buttons
         MovieDetailsActionButtons()
+        Spacer(Modifier.height(MARGIN_LARGE))
+        NetflixTabBar(tabs)
     }
 }
 

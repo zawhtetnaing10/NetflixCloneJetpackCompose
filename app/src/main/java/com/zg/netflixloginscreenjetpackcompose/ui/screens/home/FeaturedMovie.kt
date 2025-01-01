@@ -43,7 +43,6 @@ import com.zg.netflixloginscreenjetpackcompose.ui.theme.FeaturedMovieGradient
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.MARGIN_LARGE
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.MARGIN_MEDIUM
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.MARGIN_MEDIUM_2
-import com.zg.netflixloginscreenjetpackcompose.ui.theme.MARGIN_MEDIUM_3
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.MARGIN_SMALL
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.NetflixCloneJetpackComposeTheme
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.NetflixGrey
