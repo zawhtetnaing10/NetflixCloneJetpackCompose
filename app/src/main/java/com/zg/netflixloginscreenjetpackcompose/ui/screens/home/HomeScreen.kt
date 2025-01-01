@@ -10,9 +10,11 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.zg.netflixloginscreenjetpackcompose.firebase.FirebaseCredentialProvider
 import com.zg.netflixloginscreenjetpackcompose.ui.list_items.ContinueWatchingListItem
 import com.zg.netflixloginscreenjetpackcompose.ui.list_items.MovieListItem
 import com.zg.netflixloginscreenjetpackcompose.ui.resusable_composables.MobileGamesSection
@@ -25,6 +27,14 @@ import com.zg.netflixloginscreenjetpackcompose.ui.theme.NetflixCloneJetpackCompo
 
 @Composable
 fun HomeScreen(onTapMovie: () -> Unit, modifier: Modifier = Modifier) {
+
+    // TODO: - Remove this after testing
+    LaunchedEffect(Unit) {
+        FirebaseCredentialProvider().getMovieDBApiKey(
+            onSuccess = {},
+            onFailure = {}
+        )
+    }
 
     Scaffold(
         topBar = {
