@@ -14,7 +14,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.zg.netflixloginscreenjetpackcompose.ui.navigation.MainNavHost
 import com.zg.netflixloginscreenjetpackcompose.ui.screens.login.NetflixLoginScreen
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.NetflixCloneJetpackComposeTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

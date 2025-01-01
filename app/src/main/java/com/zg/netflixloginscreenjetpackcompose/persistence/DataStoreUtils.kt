@@ -6,13 +6,16 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import javax.inject.Inject
 
 /**
  * Name of the DataStore
  */
 const val MOVIE_DATA_STORE_NAME = "moviedb_data_store"
+
 /**
  * Data Store instance which will be used for storing key value data
  */
@@ -22,7 +25,7 @@ private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(na
 /**
  * This class will be used by the Repository to store and retrieve key value data from persistence
  */
-class DataStoreUtils(context: Context) {
+class DataStoreUtils @Inject constructor(@ApplicationContext context: Context) {
     /**
      * Initialize Data store
      */
