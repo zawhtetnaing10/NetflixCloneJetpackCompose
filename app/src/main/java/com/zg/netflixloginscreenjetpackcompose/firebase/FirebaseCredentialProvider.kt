@@ -1,8 +1,11 @@
 package com.zg.netflixloginscreenjetpackcompose.firebase
 
-import android.util.Log
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.channels.awaitClose
+
 
 class FirebaseCredentialProvider {
     // Instance of FireStore
@@ -10,21 +13,24 @@ class FirebaseCredentialProvider {
 
     /**
      * Gets theMovieDB api key from cloud fire store
-     * @param onSuccess Callback if the api key retrieval is successful
-     * @param onFailure Callback if the api key retrieval failed.
      */
-    fun getMovieDBApiKey(onSuccess: (String) -> Unit, onFailure: () -> Unit) {
-        db.collection(API_KEYS_COLLECTION_NAME)
-            .document(MOVIE_DB_DOCUMENT_NAME)
-            .get()
-            .addOnSuccessListener {
-                val apiKey = it.get(API_KEY_ATTRIBUTE_NAME).toString()
-                Log.d("ApiKey", apiKey)
-                onSuccess(apiKey)
-            }
-            .addOnFailureListener {
-                Log.d("ApiKey", "Failed to retrieve api key")
-                onFailure()
-            }
+    fun getMovieDBApiKey() : Flow<String> {
+        return callbackFlow {
+            db.collection(API_KEYS_COLLECTION_NAME)
+                .document(MOVIE_DB_DOCUMENT_NAME)
+                .get()
+                .addOnSuccessListener { snapShot ->
+                    val apiKey = snapShot.get(API_KEY_ATTRIBUTE_NAME) as? String
+                    apiKey?.let {
+                        trySend(it)
+                    } ?: run{
+                        throw IllegalStateException("Api key not found")
+                    }
+                }
+                .addOnFailureListener { exception ->
+                    close(exception)
+                }
+            awaitClose {}
+        }
     }
 }

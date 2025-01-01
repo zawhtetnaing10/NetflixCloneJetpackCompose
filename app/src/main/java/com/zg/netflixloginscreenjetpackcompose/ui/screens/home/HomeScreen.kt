@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.zg.netflixloginscreenjetpackcompose.ui.list_items.ContinueWatchingListItem
 import com.zg.netflixloginscreenjetpackcompose.ui.list_items.MovieListItem
 import com.zg.netflixloginscreenjetpackcompose.ui.resusable_composables.MobileGamesSection
@@ -22,9 +23,11 @@ import com.zg.netflixloginscreenjetpackcompose.ui.theme.HOME_SCREEN_CATEGORIES_T
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.MARGIN_MEDIUM_2
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.MARGIN_MEDIUM_3
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.NetflixCloneJetpackComposeTheme
+import com.zg.netflixloginscreenjetpackcompose.viewmodels.HomeViewModel
 
 @Composable
-fun HomeScreen(onTapMovie: () -> Unit, modifier: Modifier = Modifier) {
+fun HomeScreen(onTapMovie: () -> Unit, viewModel: HomeViewModel = hiltViewModel(), modifier: Modifier = Modifier) {
+
     Scaffold(
         topBar = {
             HomeScreenAppbar()
