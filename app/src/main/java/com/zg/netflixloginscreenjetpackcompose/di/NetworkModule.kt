@@ -22,9 +22,14 @@ object NetworkModule {
 
     @Provides
     fun provideRetrofit() : Retrofit {
+
+        val json = Json{
+            ignoreUnknownKeys = true
+        }
+
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
-            .addConverterFactory(Json.asConverterFactory("application/json;charset=UTF8".toMediaType()))
+            .addConverterFactory(json.asConverterFactory("application/json;charset=UTF8".toMediaType()))
             .build()
     }
 

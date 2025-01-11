@@ -1,5 +1,6 @@
 package com.zg.netflixloginscreenjetpackcompose.data.repository
 
+import com.zg.netflixloginscreenjetpackcompose.data.models.Movie
 import com.zg.netflixloginscreenjetpackcompose.firebase.FirebaseCredentialProvider
 import com.zg.netflixloginscreenjetpackcompose.network.MoviesApi
 import com.zg.netflixloginscreenjetpackcompose.persistence.DataStoreUtils
@@ -21,9 +22,14 @@ class MovieDataRepository @Inject constructor(
     private val moviesApi: MoviesApi
 ) {
 
-    // TODO: - Continue implementing this
-    fun getNowPlayingMovies() : Flow<String>{
+    /**
+     * Get now playing movies from network
+     * @return Returns the Flow of the movie list obtained
+     */
+    fun getNowPlayingMovies(): Flow<List<Movie>?> {
         return getApiKey()
+            .map { moviesApi.getNowPlayingMovies(authorization = it, page = 1.toString()) }
+            .map { it.movieList }
     }
 
     /**
@@ -35,7 +41,7 @@ class MovieDataRepository @Inject constructor(
         return dataStoreUtils.apiKey
             .flatMapLatest {
                 if (it.isNotBlank())
-                    flowOf(it)
+                    flowOf("Bearer $it")
                 else
                     getApiKeyFromFirebaseAndSaveToDataStore()
             }

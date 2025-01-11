@@ -1,6 +1,6 @@
 package com.zg.netflixloginscreenjetpackcompose.network
 
-import com.zg.netflixloginscreenjetpackcompose.network.Responses.MovieListResponse
+import com.zg.netflixloginscreenjetpackcompose.network.responses.MovieListResponse
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Query

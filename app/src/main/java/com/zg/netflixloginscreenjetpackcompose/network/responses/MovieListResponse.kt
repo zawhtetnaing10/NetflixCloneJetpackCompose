@@ -1,4 +1,4 @@
-package com.zg.netflixloginscreenjetpackcompose.network.Responses
+package com.zg.netflixloginscreenjetpackcompose.network.responses
 
 import com.zg.netflixloginscreenjetpackcompose.data.models.DateRange
 import com.zg.netflixloginscreenjetpackcompose.data.models.Movie
