@@ -1,11 +1,13 @@
 package com.zg.netflixloginscreenjetpackcompose.data.repository
 
 import com.zg.netflixloginscreenjetpackcompose.firebase.FirebaseCredentialProvider
+import com.zg.netflixloginscreenjetpackcompose.network.MoviesApi
 import com.zg.netflixloginscreenjetpackcompose.persistence.DataStoreUtils
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 /**
@@ -15,7 +17,8 @@ import javax.inject.Inject
 @OptIn(ExperimentalCoroutinesApi::class)
 class MovieDataRepository @Inject constructor(
     private val dataStoreUtils: DataStoreUtils,
-    private val firebaseCredentialProvider: FirebaseCredentialProvider
+    private val firebaseCredentialProvider: FirebaseCredentialProvider,
+    private val moviesApi: MoviesApi
 ) {
 
     // TODO: - Continue implementing this

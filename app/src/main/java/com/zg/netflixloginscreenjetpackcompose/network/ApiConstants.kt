@@ -10,3 +10,14 @@ const val ENDPOINT_MOVIE_DETAILS = "/movie"
 const val ENDPOINT_CREDITS = "/movie"
 const val ENDPOINT_GENRES = "/genre/movie/list"
 const val ENDPOINT_MOVIES_BY_GENRE = "/discover/movie"
+
+// Headers
+const val HEADER_AUTHORIZATION = "Authorization"
+
+// Params
+const val PARAM_LANGUAGE = "language"
+const val PARAM_PAGE = "page"
+
+
+// Default Params
+const val DEFAULT_PARAM_EN_US = "en-US"

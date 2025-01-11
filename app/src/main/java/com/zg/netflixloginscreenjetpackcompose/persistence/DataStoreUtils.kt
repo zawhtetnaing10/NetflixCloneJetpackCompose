@@ -21,7 +21,6 @@ const val MOVIE_DATA_STORE_NAME = "moviedb_data_store"
  */
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = MOVIE_DATA_STORE_NAME)
 
-// TODO: - Use Hilt DI to inject into Repository
 /**
  * This class will be used by the Repository to store and retrieve key value data from persistence
  */

@@ -80,6 +80,7 @@ dependencies {
     // Retrofit
     implementation(libs.retrofit)
     implementation(libs.converter.kotlinx.serialization)
+    implementation(libs.okhttp)
 }
 
 // Allow references to generated code
