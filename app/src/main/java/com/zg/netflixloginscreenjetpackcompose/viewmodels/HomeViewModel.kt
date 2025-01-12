@@ -24,7 +24,7 @@ class HomeViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             // Fetch NowPlaying movies
-            movieDataRepository.getNowPlayingMovies()
+            movieDataRepository.getFeaturedMovie()
                 .catch { throwable ->
                     // TODO: - Show error dialog here.
                     Log.d("NPMoviesError", throwable.toString())
@@ -32,7 +32,7 @@ class HomeViewModel @Inject constructor(
                 .collect{
                     Log.d("NPMoviesVM", it.toString())
                     _homeScreenState.value = homeScreenState.value.copy(
-                        nowPlayingMovies = it
+                        featuredMovie = it
                     )
                 }
         }

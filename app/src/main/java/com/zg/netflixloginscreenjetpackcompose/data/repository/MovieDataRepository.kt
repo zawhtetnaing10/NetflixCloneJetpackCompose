@@ -26,10 +26,10 @@ class MovieDataRepository @Inject constructor(
      * Get now playing movies from network
      * @return Returns the Flow of the movie list obtained
      */
-    fun getNowPlayingMovies(): Flow<List<Movie>?> {
+    fun getFeaturedMovie(): Flow<Movie?> {
         return getApiKey()
             .map { moviesApi.getNowPlayingMovies(authorization = it, page = 1.toString()) }
-            .map { it.movieList }
+            .map { it.movieList?.firstOrNull() }
     }
 
     /**

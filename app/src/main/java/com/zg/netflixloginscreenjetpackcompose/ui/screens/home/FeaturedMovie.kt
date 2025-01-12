@@ -37,6 +37,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.zg.netflixloginscreenjetpackcompose.R
+import com.zg.netflixloginscreenjetpackcompose.data.models.Movie
 import com.zg.netflixloginscreenjetpackcompose.ui.resusable_composables.NetflixRoundedButton
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.Black
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.FeaturedMovieGradient
@@ -52,7 +53,7 @@ import com.zg.netflixloginscreenjetpackcompose.ui.theme.White
 import com.zg.netflixloginscreenjetpackcompose.ui.utils.IconSource
 
 @Composable
-fun FeaturedMovie(onTapMovie: () -> Unit, modifier: Modifier = Modifier) {
+fun FeaturedMovie(movie: Movie, onTapMovie: () -> Unit, modifier: Modifier = Modifier) {
 
     // Height of the card
     val calculatedHeight = getFeaturedMovieHeight(LocalConfiguration.current)
