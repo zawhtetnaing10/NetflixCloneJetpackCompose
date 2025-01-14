@@ -1,14 +1,14 @@
 package com.zg.netflixloginscreenjetpackcompose.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.zg.netflixloginscreenjetpackcompose.data.models.Movie
 import com.zg.netflixloginscreenjetpackcompose.data.repository.MovieDataRepository
-import com.zg.netflixloginscreenjetpackcompose.states.HomeScreenState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -24,17 +24,32 @@ class HomeViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             // Fetch NowPlaying movies
-            movieDataRepository.getFeaturedMovie()
-                .catch { throwable ->
-                    // TODO: - Show error dialog here.
-                    Log.d("NPMoviesError", throwable.toString())
-                }
-                .collect{
-                    Log.d("NPMoviesVM", it.toString())
-                    _homeScreenState.value = homeScreenState.value.copy(
-                        featuredMovie = it
-                    )
-                }
+            fetchFeaturedMovie()
         }
     }
+
+    /**
+     * Fetches featured movie from repository
+     */
+    private suspend fun fetchFeaturedMovie() {
+        movieDataRepository.getFeaturedMovie()
+            .onStart {
+                _homeScreenState.value = _homeScreenState.value.copy(isLoading = true)
+            }
+            .catch { throwable ->
+                _homeScreenState.value = _homeScreenState.value.copy(errorMessage = throwable.message ?: "")
+            }
+            .collect {
+                _homeScreenState.value = homeScreenState.value.copy(featuredMovie = it)
+            }
+    }
 }
+
+/**
+ * State of the Home Screen
+ */
+data class HomeScreenState(
+    val featuredMovie: Movie? = null,
+    val isLoading: Boolean = false,
+    val errorMessage: String = "",
+)

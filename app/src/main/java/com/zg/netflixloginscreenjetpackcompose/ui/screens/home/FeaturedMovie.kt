@@ -53,7 +53,7 @@ import com.zg.netflixloginscreenjetpackcompose.ui.theme.White
 import com.zg.netflixloginscreenjetpackcompose.ui.utils.IconSource
 
 @Composable
-fun FeaturedMovie(movie: Movie, onTapMovie: () -> Unit, modifier: Modifier = Modifier) {
+fun FeaturedMovie(movie: Movie?, onTapMovie: () -> Unit, modifier: Modifier = Modifier) {
 
     // Height of the card
     val calculatedHeight = getFeaturedMovieHeight(LocalConfiguration.current)
@@ -192,6 +192,6 @@ private fun getFeaturedMovieHeight(localConfiguration: Configuration): Dp {
 @Composable
 private fun FeaturedMoviePreview() {
     NetflixCloneJetpackComposeTheme {
-        FeaturedMovie(onTapMovie = {})
+        FeaturedMovie(movie = null, onTapMovie = {})
     }
 }

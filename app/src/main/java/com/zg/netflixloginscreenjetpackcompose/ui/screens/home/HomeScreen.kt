@@ -10,11 +10,12 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.zg.netflixloginscreenjetpackcompose.ui.list_items.ContinueWatchingListItem
 import com.zg.netflixloginscreenjetpackcompose.ui.list_items.MovieListItem
 import com.zg.netflixloginscreenjetpackcompose.ui.resusable_composables.MobileGamesSection
@@ -30,9 +31,7 @@ import com.zg.netflixloginscreenjetpackcompose.viewmodels.HomeViewModel
 fun HomeScreen(onTapMovie: () -> Unit, viewModel: HomeViewModel = hiltViewModel(), modifier: Modifier = Modifier) {
 
     // State from ViewModel
-    val homeScreenState = viewModel.homeScreenState.collectAsState()
-
-    val featuredMovie = homeScreenState.value.featuredMovie
+    val homeScreenState by viewModel.homeScreenState.collectAsStateWithLifecycle()
 
     Scaffold(
         topBar = {
@@ -64,8 +63,8 @@ fun HomeScreen(onTapMovie: () -> Unit, viewModel: HomeViewModel = hiltViewModel(
                 LazyColumn(modifier = Modifier.padding(top = 140.dp)) {
                     // Featured Movie
                     item {
-                        if(featuredMovie != null)
-                            FeaturedMovie(movie = featuredMovie, onTapMovie = onTapMovie)
+                        if(homeScreenState.featuredMovie != null)
+                            FeaturedMovie(movie = homeScreenState.featuredMovie, onTapMovie = onTapMovie)
                     }
                     // Spacer
                     item {
