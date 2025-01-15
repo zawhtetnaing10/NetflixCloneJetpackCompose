@@ -32,7 +32,7 @@ class HomeViewModel @Inject constructor(
      * Fetches featured movie from repository
      */
     private suspend fun fetchFeaturedMovie() {
-        movieDataRepository.getFeaturedMovie()
+        movieDataRepository.fetchFeaturedMovie()
             .onStart {
                 _homeScreenState.value = _homeScreenState.value.copy(isLoading = true)
             }

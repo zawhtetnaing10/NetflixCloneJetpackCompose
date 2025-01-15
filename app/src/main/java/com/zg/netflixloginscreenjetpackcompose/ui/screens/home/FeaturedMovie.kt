@@ -36,6 +36,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import coil3.compose.AsyncImage
 import com.zg.netflixloginscreenjetpackcompose.R
 import com.zg.netflixloginscreenjetpackcompose.data.models.Movie
 import com.zg.netflixloginscreenjetpackcompose.ui.resusable_composables.NetflixRoundedButton
@@ -51,6 +52,7 @@ import com.zg.netflixloginscreenjetpackcompose.ui.theme.NetflixSansFontFamily
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.TEXT_REGULAR
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.White
 import com.zg.netflixloginscreenjetpackcompose.ui.utils.IconSource
+import com.zg.netflixloginscreenjetpackcompose.utils.FEATURED_MOVIE_IMAGE_BASE_URL
 
 @Composable
 fun FeaturedMovie(movie: Movie?, onTapMovie: () -> Unit, modifier: Modifier = Modifier) {
@@ -72,8 +74,8 @@ fun FeaturedMovie(movie: Movie?, onTapMovie: () -> Unit, modifier: Modifier = Mo
     ) {
         Box {
             // Image
-            Image(
-                painterResource(R.drawable.lal_palma_poster),
+            AsyncImage(
+                "$FEATURED_MOVIE_IMAGE_BASE_URL${movie?.posterPath}",
                 contentScale = ContentScale.Crop,
                 contentDescription = null,
                 modifier = Modifier.fillMaxSize()
@@ -89,7 +91,7 @@ fun FeaturedMovie(movie: Movie?, onTapMovie: () -> Unit, modifier: Modifier = Mo
                     .padding(bottom = MARGIN_MEDIUM_2)
             ) {
                 // Genres
-                FeaturedMovieGenres()
+                FeaturedMovieGenres(movie = movie)
 
                 Spacer(Modifier.height(MARGIN_MEDIUM))
 
@@ -129,7 +131,7 @@ fun FeaturedMovieButtons(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun FeaturedMovieGenres(modifier: Modifier = Modifier) {
+fun FeaturedMovieGenres(movie: Movie?, modifier: Modifier = Modifier) {
 
     // TODO: - replace with real data after adding network layer
     val dummyGenres = listOf("Suspenseful", "Emotional", "Drama")

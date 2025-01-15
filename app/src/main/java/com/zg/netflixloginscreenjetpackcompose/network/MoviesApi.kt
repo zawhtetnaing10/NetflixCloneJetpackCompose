@@ -1,8 +1,10 @@
 package com.zg.netflixloginscreenjetpackcompose.network
 
+import com.zg.netflixloginscreenjetpackcompose.data.models.Movie
 import com.zg.netflixloginscreenjetpackcompose.network.responses.MovieListResponse
 import retrofit2.http.GET
 import retrofit2.http.Header
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface MoviesApi {
@@ -11,5 +13,11 @@ interface MoviesApi {
         @Header(HEADER_AUTHORIZATION) authorization: String,
         @Query(PARAM_PAGE) page: String,
         @Query(PARAM_LANGUAGE) language: String = DEFAULT_PARAM_EN_US
-    ) : MovieListResponse
+    ): MovieListResponse
+
+    @GET("$ENDPOINT_MOVIE_DETAILS/{movie_id}")
+    suspend fun getMovieDetails(
+        @Header(HEADER_AUTHORIZATION) authorization: String,
+        @Path("movie_id") movieId: Int,
+    ): Movie
 }

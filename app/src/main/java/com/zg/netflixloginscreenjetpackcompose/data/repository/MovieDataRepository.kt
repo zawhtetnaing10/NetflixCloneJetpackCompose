@@ -4,11 +4,13 @@ import com.zg.netflixloginscreenjetpackcompose.data.models.Movie
 import com.zg.netflixloginscreenjetpackcompose.firebase.FirebaseCredentialProvider
 import com.zg.netflixloginscreenjetpackcompose.network.MoviesApi
 import com.zg.netflixloginscreenjetpackcompose.persistence.DataStoreUtils
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
 /**
@@ -26,10 +28,24 @@ class MovieDataRepository @Inject constructor(
      * Get now playing movies from network
      * @return Returns the Flow of the movie list obtained
      */
-    fun getFeaturedMovie(): Flow<Movie?> {
+    fun fetchFeaturedMovie(): Flow<Movie?> {
         return getApiKey()
-            .map { moviesApi.getNowPlayingMovies(authorization = it, page = 1.toString()) }
-            .map { it.movieList?.firstOrNull() }
+            .flatMapLatest(::fetchFeaturedMovieFlow)
+            .flowOn(Dispatchers.IO)
+    }
+
+    /**
+     * Fetches Featured Movie
+     */
+    fun fetchFeaturedMovieFlow(apiKey: String): Flow<Movie?> = flow {
+        val nowPlayingMovies = moviesApi.getNowPlayingMovies(authorization = apiKey, page = 1.toString()).movieList
+        if (nowPlayingMovies?.isNotEmpty() == true) {
+            val featuredMovie = nowPlayingMovies.first()
+            val featuredMovieDetails = moviesApi.getMovieDetails(authorization = apiKey, movieId = featuredMovie.id)
+            emit(featuredMovieDetails)
+        } else {
+            emit(null)
+        }
     }
 
     /**
