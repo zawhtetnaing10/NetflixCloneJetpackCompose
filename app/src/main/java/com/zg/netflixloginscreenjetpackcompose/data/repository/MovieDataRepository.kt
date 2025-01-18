@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.transform
+import okhttp3.Dispatcher
 import javax.inject.Inject
 
 /**
@@ -67,6 +68,15 @@ class MovieDataRepository @Inject constructor(
                 val moviesByGenre = moviesApi.getMoviesByGenre(authorization = apiKey, genreId = it.id).movieList ?: listOf()
                 emit(Pair(it.name, moviesByGenre))
             }
+    }
+
+    /**
+     * Fetch movie details from network.
+     */
+    fun fetchMovieDetails(movieId : Int) : Flow<Movie?>{
+        return getApiKey()
+            .transform { emit(moviesApi.getMovieDetails(authorization = it, movieId = movieId)) }
+            .flowOn(Dispatchers.IO)
     }
 
     /**

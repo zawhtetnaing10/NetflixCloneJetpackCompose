@@ -27,6 +27,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -35,7 +36,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.zg.netflixloginscreenjetpackcompose.R
+import com.zg.netflixloginscreenjetpackcompose.data.models.Movie
 import com.zg.netflixloginscreenjetpackcompose.ui.list_items.MovieListItem
 import com.zg.netflixloginscreenjetpackcompose.ui.navigation.NavRoutes
 import com.zg.netflixloginscreenjetpackcompose.ui.resusable_composables.MovieReleaseInfo
@@ -59,17 +62,24 @@ import com.zg.netflixloginscreenjetpackcompose.ui.utils.calculateHeightForGrid
 import com.zg.netflixloginscreenjetpackcompose.viewmodels.MovieDetailsViewModel
 
 @Composable
-fun MovieDetailsScreen(movieId : Int, onTapBack: () -> Unit, modifier: Modifier = Modifier) {
+fun MovieDetailsScreen(movieId: Int, onTapBack: () -> Unit, modifier: Modifier = Modifier) {
 
-    val viewModel = hiltViewModel<MovieDetailsViewModel, MovieDetailsViewModel.MovieDetailsViewModelFactory>{
+    val viewModel = hiltViewModel<MovieDetailsViewModel, MovieDetailsViewModel.MovieDetailsViewModelFactory> {
         it.create(movieId = movieId)
     }
+
+    // State for details screen
+    val detailsScreenState by viewModel.detailsScreenState.collectAsStateWithLifecycle()
 
     // TODO: - Move this to ViewModel
     val movieDetailsScreenTabs = listOf(stringResource(R.string.more_like_this), stringResource(R.string.trailers_and_more))
 
     Scaffold(topBar = { MovieDetailsAppbar(onTapBack = onTapBack) }, modifier = modifier.fillMaxSize()) { paddingValues ->
-        MovieDetailsContent(tabs = movieDetailsScreenTabs, modifier = Modifier.padding(bottom = paddingValues.calculateBottomPadding()))
+        MovieDetailsContent(
+            movie = detailsScreenState.movie,
+            tabs = movieDetailsScreenTabs,
+            modifier = Modifier.padding(bottom = paddingValues.calculateBottomPadding())
+        )
     }
 }
 
@@ -96,19 +106,19 @@ fun MovieDetailsAppbar(onTapBack: () -> Unit, modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun MovieDetailsContent(tabs: List<String>, modifier: Modifier = Modifier) {
+fun MovieDetailsContent(movie: Movie?, tabs: List<String>, modifier: Modifier = Modifier) {
     Surface(color = Black, modifier = modifier.fillMaxSize()) {
         Column {
             // Video Player
             VideoPlayer(modifier = Modifier.fillMaxWidth())
             // Body
-            MovieDetailsBody(tabs = tabs)
+            MovieDetailsBody(movie = movie, tabs = tabs)
         }
     }
 }
 
 @Composable
-fun MovieDetailsBody(tabs: List<String>, modifier: Modifier = Modifier) {
+fun MovieDetailsBody(movie: Movie?, tabs: List<String>, modifier: Modifier = Modifier) {
     LazyColumn(
         modifier = modifier
             .padding(MARGIN_MEDIUM_2)
@@ -119,7 +129,7 @@ fun MovieDetailsBody(tabs: List<String>, modifier: Modifier = Modifier) {
         // Spacer
         item { Spacer(Modifier.height(MARGIN_MEDIUM)) }
         // Movie Name
-        item { Text("Carry On", color = White, fontFamily = NetflixSansFontFamily, fontWeight = FontWeight.Bold) }
+        item { Text(movie?.title ?: "", color = White, fontFamily = NetflixSansFontFamily, fontWeight = FontWeight.Bold) }
         // Spacer
         item { Spacer(Modifier.height(MARGIN_MEDIUM)) }
         // Movie Release Info
@@ -159,7 +169,13 @@ fun MovieDetailsBody(tabs: List<String>, modifier: Modifier = Modifier) {
                 verticalArrangement = Arrangement.spacedBy(MARGIN_MEDIUM_2),
                 contentPadding = PaddingValues(vertical = MARGIN_LARGE),
                 // TODO: - replace with real data from view model
-                modifier = Modifier.height(calculateHeightForGrid(noOfItems = 12, noOfColumns = 3, heightPerItem = MOVIE_IMAGE_HEIGHT + MARGIN_LARGE)) // Added a bit more height to avoid nested scrolling
+                modifier = Modifier.height(
+                    calculateHeightForGrid(
+                        noOfItems = 12,
+                        noOfColumns = 3,
+                        heightPerItem = MOVIE_IMAGE_HEIGHT + MARGIN_LARGE
+                    )
+                ) // Added a bit more height to avoid nested scrolling
             ) {
                 items((1..12).toList()) {
                     MovieListItem(movie = null, onTapMovie = {})
