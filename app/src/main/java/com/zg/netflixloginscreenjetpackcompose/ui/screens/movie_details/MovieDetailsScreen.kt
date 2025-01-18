@@ -155,7 +155,7 @@ fun MovieDetailsBody(tabs: List<String>, modifier: Modifier = Modifier) {
                 modifier = Modifier.height(calculateHeightForGrid(noOfItems = 12, noOfColumns = 3, heightPerItem = MOVIE_IMAGE_HEIGHT + MARGIN_LARGE)) // Added a bit more height to avoid nested scrolling
             ) {
                 items((1..12).toList()) {
-                    MovieListItem(onTapMovie = {})
+                    MovieListItem(movie = null, onTapMovie = {})
                 }
             }
         }

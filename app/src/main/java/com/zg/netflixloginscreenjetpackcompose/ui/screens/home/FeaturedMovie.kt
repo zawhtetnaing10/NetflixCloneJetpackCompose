@@ -38,6 +38,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.zg.netflixloginscreenjetpackcompose.R
+import com.zg.netflixloginscreenjetpackcompose.data.models.Genre
 import com.zg.netflixloginscreenjetpackcompose.data.models.Movie
 import com.zg.netflixloginscreenjetpackcompose.ui.resusable_composables.NetflixRoundedButton
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.Black
@@ -75,7 +76,7 @@ fun FeaturedMovie(movie: Movie?, onTapMovie: () -> Unit, modifier: Modifier = Mo
         Box {
             // Image
             AsyncImage(
-                "$FEATURED_MOVIE_IMAGE_BASE_URL${movie?.posterPath}",
+                "$FEATURED_MOVIE_IMAGE_BASE_URL${movie?.backdropPath}",
                 contentScale = ContentScale.Crop,
                 contentDescription = null,
                 modifier = Modifier.fillMaxSize()
@@ -91,7 +92,7 @@ fun FeaturedMovie(movie: Movie?, onTapMovie: () -> Unit, modifier: Modifier = Mo
                     .padding(bottom = MARGIN_MEDIUM_2)
             ) {
                 // Genres
-                FeaturedMovieGenres(movie = movie)
+                FeaturedMovieGenres(genres = movie?.genres ?: listOf())
 
                 Spacer(Modifier.height(MARGIN_MEDIUM))
 
@@ -131,22 +132,19 @@ fun FeaturedMovieButtons(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun FeaturedMovieGenres(movie: Movie?, modifier: Modifier = Modifier) {
-
-    // TODO: - replace with real data after adding network layer
-    val dummyGenres = listOf("Suspenseful", "Emotional", "Drama")
+fun FeaturedMovieGenres(genres: List<Genre>?, modifier: Modifier = Modifier) {
 
     Row(verticalAlignment = Alignment.CenterVertically, modifier = modifier) {
-        dummyGenres.forEachIndexed { index, genre ->
+        genres?.forEachIndexed { index, genre ->
             // Genre Name
             Text(
-                genre,
+                genre.name,
                 color = White,
                 fontSize = TEXT_REGULAR,
                 fontFamily = NetflixSansFontFamily
             )
             // Dot separator
-            if (index < dummyGenres.count() - 1)
+            if (index < genres.count() - 1)
                 Box(
                     modifier = Modifier
                         .padding(horizontal = MARGIN_MEDIUM)

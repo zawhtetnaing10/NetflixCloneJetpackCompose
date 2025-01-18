@@ -1,5 +1,7 @@
 package com.zg.netflixloginscreenjetpackcompose.data.models
 
+import com.zg.netflixloginscreenjetpackcompose.utils.FEATURED_MOVIE_IMAGE_BASE_URL
+import com.zg.netflixloginscreenjetpackcompose.utils.GENERAL_MOVIE_IMAGE_BASE_URL
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -9,10 +11,10 @@ data class Movie(
     val adult: Boolean?,
 
     @SerialName("backdrop_path")
-    val backdropPath: String?,
+    val backdropPath: String? = null,
 
     @SerialName("belongs_to_collection")
-    val belongsToCollection: CollectionInfo?,
+    val belongsToCollection: CollectionInfo? = null,
 
     @SerialName("budget")
     val budget: Int?,
@@ -82,4 +84,21 @@ data class Movie(
 
     @SerialName("vote_count")
     val voteCount: Int?
-)
+) {
+
+    /**
+     * Gets the back drop image path for featured movie
+     * This will be in 1200 px width
+     */
+    fun getFullFeaturedMovieImagePath() : String {
+        return "$FEATURED_MOVIE_IMAGE_BASE_URL$backdropPath"
+    }
+
+    /**
+     * Gets the poster image path for featured movie
+     * This will be in 400 px width
+     */
+    fun getFullPosterPath() : String{
+        return "$GENERAL_MOVIE_IMAGE_BASE_URL$posterPath"
+    }
+}

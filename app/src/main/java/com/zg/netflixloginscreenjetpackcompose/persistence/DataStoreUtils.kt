@@ -7,7 +7,7 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
@@ -35,13 +35,15 @@ class DataStoreUtils @Inject constructor(@ApplicationContext context: Context) {
      */
     private val kMovieDbApiKey = stringPreferencesKey("movie_db_api_key")
 
+
     /**
-     * Retrieve api key from DataStore
+     * Retrieves the data store from db
      */
-    val apiKey: Flow<String> = dataStore.data
-        .map { preferences ->
+    suspend fun getApiKeyFromDataStore(): String {
+        return dataStore.data.map { preferences ->
             preferences[kMovieDbApiKey] ?: ""
-        }
+        }.first()
+    }
 
     /**
      * Saves api key to the data store

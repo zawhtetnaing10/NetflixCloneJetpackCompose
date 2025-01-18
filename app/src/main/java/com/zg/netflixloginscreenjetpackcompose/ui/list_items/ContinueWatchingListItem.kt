@@ -31,6 +31,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.zg.netflixloginscreenjetpackcompose.R
+import com.zg.netflixloginscreenjetpackcompose.data.models.Movie
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.Black
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.CONTINUE_WATCHING_PLAY_BUTTON_SIZE
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.CONTINUE_WATCHING_PLAY_ICON_SIZE
@@ -48,7 +49,7 @@ import com.zg.netflixloginscreenjetpackcompose.ui.theme.TEXT_SMALL
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.White
 
 @Composable
-fun ContinueWatchingListItem(onTapMovie: () -> Unit, modifier: Modifier = Modifier) {
+fun ContinueWatchingListItem(movie: Movie?, onTapMovie: () -> Unit, modifier: Modifier = Modifier) {
     Column(modifier = modifier
         .width(HOME_SCREEN_MOVIE_IMAGE_WIDTH)
         .clickable { onTapMovie() }) {
@@ -162,6 +163,6 @@ fun ContinueWatchingButtons(modifier: Modifier = Modifier) {
 @Composable
 private fun ContinueWatchingListItemPreview() {
     NetflixCloneJetpackComposeTheme {
-        ContinueWatchingListItem(onTapMovie = {})
+        ContinueWatchingListItem(movie = null, onTapMovie = {})
     }
 }

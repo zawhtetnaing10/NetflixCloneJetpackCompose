@@ -19,6 +19,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.zg.netflixloginscreenjetpackcompose.ui.list_items.ContinueWatchingListItem
 import com.zg.netflixloginscreenjetpackcompose.ui.list_items.MovieListItem
 import com.zg.netflixloginscreenjetpackcompose.ui.resusable_composables.MobileGamesSection
+import com.zg.netflixloginscreenjetpackcompose.ui.resusable_composables.TitleAndContinueWatchingMovieListSection
 import com.zg.netflixloginscreenjetpackcompose.ui.resusable_composables.TitleAndHorizontalMovieListSection
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.Black
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.HOME_SCREEN_CATEGORIES_TOP_MARGIN
@@ -63,8 +64,7 @@ fun HomeScreen(onTapMovie: () -> Unit, viewModel: HomeViewModel = hiltViewModel(
                 LazyColumn(modifier = Modifier.padding(top = 140.dp)) {
                     // Featured Movie
                     item {
-                        if(homeScreenState.featuredMovie != null)
-                            FeaturedMovie(movie = homeScreenState.featuredMovie, onTapMovie = onTapMovie)
+                        FeaturedMovie(movie = homeScreenState.featuredMovie, onTapMovie = onTapMovie)
                     }
                     // Spacer
                     item {
@@ -72,26 +72,26 @@ fun HomeScreen(onTapMovie: () -> Unit, viewModel: HomeViewModel = hiltViewModel(
                     }
                     // Mobile Games
                     item {
-                        MobileGamesSection()
+                        if(homeScreenState.mobileGames?.isNotEmpty() == true)
+                            MobileGamesSection()
                     }
                     // Continue Watching Section
                     item {
-                        TitleAndHorizontalMovieListSection(
-                            title = "Continue Watching",
-                            listItem = {
-                                ContinueWatchingListItem(onTapMovie = onTapMovie)
-                            },
-                            modifier = Modifier.padding(top = MARGIN_MEDIUM_3)
-                        )
+                        if(homeScreenState.continueWatching?.isNotEmpty() == true)
+                            TitleAndContinueWatchingMovieListSection(
+                                title = "Continue Watching",
+                                movieList = homeScreenState.continueWatching ?: listOf(),
+                                onTapMovie = {},
+                                modifier = Modifier.padding(top = MARGIN_MEDIUM_3)
+                            )
                     }
                     // TODO: Replace with real movie lists
-                    items((1..10).toList()) {
+                    items(homeScreenState.moviesWithGenre ?: listOf()) {
                         // Horizontal Movie List
                         TitleAndHorizontalMovieListSection(
-                            title = "Today's top picks for you",
-                            listItem = {
-                                MovieListItem(onTapMovie = onTapMovie)
-                            },
+                            title = it.first,
+                            movieList = it.second,
+                            onTapMovie = {},
                             modifier = Modifier.padding(top = MARGIN_MEDIUM_3)
                         )
                     }

@@ -17,6 +17,7 @@ const val HEADER_AUTHORIZATION = "Authorization"
 // Params
 const val PARAM_LANGUAGE = "language"
 const val PARAM_PAGE = "page"
+const val PARAM_WITH_GENRES = "with_genres"
 
 
 // Default Params

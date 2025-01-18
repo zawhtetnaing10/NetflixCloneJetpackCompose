@@ -15,7 +15,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import coil3.compose.AsyncImage
 import com.zg.netflixloginscreenjetpackcompose.R
+import com.zg.netflixloginscreenjetpackcompose.data.models.Movie
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.MOVIE_IMAGE_HEIGHT
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.HOME_SCREEN_MOVIE_IMAGE_WIDTH
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.HOME_SCREEN_SUB_TEXT_WIDTH
@@ -28,14 +30,14 @@ import com.zg.netflixloginscreenjetpackcompose.ui.theme.TEXT_SMALL_3X
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.White
 
 @Composable
-fun MovieListItem(onTapMovie : () -> Unit, modifier: Modifier = Modifier) {
+fun MovieListItem(movie: Movie?, onTapMovie: () -> Unit, modifier: Modifier = Modifier) {
     Box(modifier = modifier.clickable { onTapMovie() }) {
         // Image
         Surface(
             shape = RoundedCornerShape(MARGIN_MEDIUM)
         ) {
-            Image(
-                painterResource(R.drawable.gladiator_photo), contentDescription = null,
+            AsyncImage(
+                movie?.getFullPosterPath() ?: "", contentDescription = null,
                 modifier = Modifier.size(width = HOME_SCREEN_MOVIE_IMAGE_WIDTH, height = MOVIE_IMAGE_HEIGHT)
             )
         }
@@ -64,6 +66,6 @@ fun MovieListItem(onTapMovie : () -> Unit, modifier: Modifier = Modifier) {
 @Composable
 private fun MovieListItemPreview() {
     NetflixCloneJetpackComposeTheme {
-        MovieListItem(onTapMovie = {})
+        MovieListItem(movie = null, onTapMovie = {})
     }
 }
