@@ -56,7 +56,7 @@ import com.zg.netflixloginscreenjetpackcompose.ui.utils.IconSource
 import com.zg.netflixloginscreenjetpackcompose.ui.utils.calculateHeightForGrid
 
 @Composable
-fun MovieDetailsScreen(onTapBack: () -> Unit, modifier: Modifier = Modifier) {
+fun MovieDetailsScreen(movieId : Int, onTapBack: () -> Unit, modifier: Modifier = Modifier) {
 
     // TODO: - Move this to ViewModel
     val movieDetailsScreenTabs = listOf(stringResource(R.string.more_like_this), stringResource(R.string.trailers_and_more))
@@ -188,6 +188,6 @@ fun PlayAndDownloadButtons(modifier: Modifier = Modifier) {
 @Composable
 private fun MovieDetailsScreenPreview() {
     NetflixCloneJetpackComposeTheme {
-        MovieDetailsScreen(onTapBack = {})
+        MovieDetailsScreen(movieId = 0, onTapBack = {})
     }
 }

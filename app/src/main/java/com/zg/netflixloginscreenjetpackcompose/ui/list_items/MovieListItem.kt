@@ -30,8 +30,8 @@ import com.zg.netflixloginscreenjetpackcompose.ui.theme.TEXT_SMALL_3X
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.White
 
 @Composable
-fun MovieListItem(movie: Movie?, onTapMovie: () -> Unit, modifier: Modifier = Modifier) {
-    Box(modifier = modifier.clickable { onTapMovie() }) {
+fun MovieListItem(movie: Movie?, onTapMovie: (Int) -> Unit, modifier: Modifier = Modifier) {
+    Box(modifier = modifier.clickable { onTapMovie(movie!!.id!!) }) {
         // Image
         Surface(
             shape = RoundedCornerShape(MARGIN_MEDIUM)

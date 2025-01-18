@@ -56,7 +56,7 @@ import com.zg.netflixloginscreenjetpackcompose.ui.utils.IconSource
 import com.zg.netflixloginscreenjetpackcompose.utils.FEATURED_MOVIE_IMAGE_BASE_URL
 
 @Composable
-fun FeaturedMovie(movie: Movie?, onTapMovie: () -> Unit, modifier: Modifier = Modifier) {
+fun FeaturedMovie(movie: Movie?, onTapMovie: (Int) -> Unit, modifier: Modifier = Modifier) {
 
     // Height of the card
     val calculatedHeight = getFeaturedMovieHeight(LocalConfiguration.current)
@@ -70,7 +70,7 @@ fun FeaturedMovie(movie: Movie?, onTapMovie: () -> Unit, modifier: Modifier = Mo
             .padding(start = MARGIN_LARGE, end = MARGIN_LARGE)
             .height(getFeaturedMovieHeight(LocalConfiguration.current))
             .clickable {
-                onTapMovie()
+                onTapMovie(movie!!.id!!)
             }
     ) {
         Box {

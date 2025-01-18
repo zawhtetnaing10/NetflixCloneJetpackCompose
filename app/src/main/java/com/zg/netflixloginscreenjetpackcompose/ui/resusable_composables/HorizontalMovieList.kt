@@ -14,7 +14,7 @@ import com.zg.netflixloginscreenjetpackcompose.ui.theme.MARGIN_MEDIUM_2
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.NetflixCloneJetpackComposeTheme
 
 @Composable
-fun HorizontalMovieList(movieList: List<Movie>, onTapMovie: () -> Unit, modifier: Modifier = Modifier) {
+fun HorizontalMovieList(movieList: List<Movie>, onTapMovie: (Int) -> Unit, modifier: Modifier = Modifier) {
     LazyRow(
         horizontalArrangement = Arrangement.spacedBy(MARGIN_MEDIUM),
         contentPadding = PaddingValues(horizontal = MARGIN_MEDIUM_2),

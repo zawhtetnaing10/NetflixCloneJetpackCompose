@@ -17,7 +17,7 @@ import com.zg.netflixloginscreenjetpackcompose.ui.theme.TEXT_REGULAR_2X
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.White
 
 @Composable
-fun TitleAndContinueWatchingMovieListSection(title: String, movieList: List<Movie>, onTapMovie: () -> Unit, modifier: Modifier = Modifier) {
+fun TitleAndContinueWatchingMovieListSection(title: String, movieList: List<Movie>, onTapMovie: (Int) -> Unit, modifier: Modifier = Modifier) {
     Column(verticalArrangement = Arrangement.spacedBy(MARGIN_MEDIUM), modifier = modifier) {
         Text(
             title,

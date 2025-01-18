@@ -16,8 +16,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.zg.netflixloginscreenjetpackcompose.ui.list_items.ContinueWatchingListItem
-import com.zg.netflixloginscreenjetpackcompose.ui.list_items.MovieListItem
 import com.zg.netflixloginscreenjetpackcompose.ui.resusable_composables.MobileGamesSection
 import com.zg.netflixloginscreenjetpackcompose.ui.resusable_composables.TitleAndContinueWatchingMovieListSection
 import com.zg.netflixloginscreenjetpackcompose.ui.resusable_composables.TitleAndHorizontalMovieListSection
@@ -29,7 +27,7 @@ import com.zg.netflixloginscreenjetpackcompose.ui.theme.NetflixCloneJetpackCompo
 import com.zg.netflixloginscreenjetpackcompose.viewmodels.HomeViewModel
 
 @Composable
-fun HomeScreen(onTapMovie: () -> Unit, viewModel: HomeViewModel = hiltViewModel(), modifier: Modifier = Modifier) {
+fun HomeScreen(onTapMovie: (Int) -> Unit, viewModel: HomeViewModel = hiltViewModel(), modifier: Modifier = Modifier) {
 
     // State from ViewModel
     val homeScreenState by viewModel.homeScreenState.collectAsStateWithLifecycle()
@@ -64,7 +62,8 @@ fun HomeScreen(onTapMovie: () -> Unit, viewModel: HomeViewModel = hiltViewModel(
                 LazyColumn(modifier = Modifier.padding(top = 140.dp)) {
                     // Featured Movie
                     item {
-                        FeaturedMovie(movie = homeScreenState.featuredMovie, onTapMovie = onTapMovie)
+                        if(homeScreenState.featuredMovie != null)
+                            FeaturedMovie(movie = homeScreenState.featuredMovie, onTapMovie = onTapMovie)
                     }
                     // Spacer
                     item {
@@ -81,7 +80,7 @@ fun HomeScreen(onTapMovie: () -> Unit, viewModel: HomeViewModel = hiltViewModel(
                             TitleAndContinueWatchingMovieListSection(
                                 title = "Continue Watching",
                                 movieList = homeScreenState.continueWatching ?: listOf(),
-                                onTapMovie = {},
+                                onTapMovie = onTapMovie,
                                 modifier = Modifier.padding(top = MARGIN_MEDIUM_3)
                             )
                     }
@@ -91,7 +90,7 @@ fun HomeScreen(onTapMovie: () -> Unit, viewModel: HomeViewModel = hiltViewModel(
                         TitleAndHorizontalMovieListSection(
                             title = it.first,
                             movieList = it.second,
-                            onTapMovie = {},
+                            onTapMovie = onTapMovie,
                             modifier = Modifier.padding(top = MARGIN_MEDIUM_3)
                         )
                     }

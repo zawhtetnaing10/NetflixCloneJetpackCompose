@@ -49,10 +49,10 @@ import com.zg.netflixloginscreenjetpackcompose.ui.theme.TEXT_SMALL
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.White
 
 @Composable
-fun ContinueWatchingListItem(movie: Movie?, onTapMovie: () -> Unit, modifier: Modifier = Modifier) {
+fun ContinueWatchingListItem(movie: Movie?, onTapMovie: (Int) -> Unit, modifier: Modifier = Modifier) {
     Column(modifier = modifier
         .width(HOME_SCREEN_MOVIE_IMAGE_WIDTH)
-        .clickable { onTapMovie() }) {
+        .clickable { onTapMovie(movie!!.id!!) }) {
         // Image and Play Button
         ContinueWatchingImage()
         // Progress

@@ -1,6 +1,5 @@
 package com.zg.netflixloginscreenjetpackcompose.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.zg.netflixloginscreenjetpackcompose.data.models.Movie
