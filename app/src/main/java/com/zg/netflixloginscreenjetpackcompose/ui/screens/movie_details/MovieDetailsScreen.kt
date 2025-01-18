@@ -34,8 +34,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.zg.netflixloginscreenjetpackcompose.R
 import com.zg.netflixloginscreenjetpackcompose.ui.list_items.MovieListItem
+import com.zg.netflixloginscreenjetpackcompose.ui.navigation.NavRoutes
 import com.zg.netflixloginscreenjetpackcompose.ui.resusable_composables.MovieReleaseInfo
 import com.zg.netflixloginscreenjetpackcompose.ui.resusable_composables.NetflixFilmLogo
 import com.zg.netflixloginscreenjetpackcompose.ui.resusable_composables.NetflixRoundedButton
@@ -54,9 +56,14 @@ import com.zg.netflixloginscreenjetpackcompose.ui.theme.TEXT_REGULAR
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.White
 import com.zg.netflixloginscreenjetpackcompose.ui.utils.IconSource
 import com.zg.netflixloginscreenjetpackcompose.ui.utils.calculateHeightForGrid
+import com.zg.netflixloginscreenjetpackcompose.viewmodels.MovieDetailsViewModel
 
 @Composable
 fun MovieDetailsScreen(movieId : Int, onTapBack: () -> Unit, modifier: Modifier = Modifier) {
+
+    val viewModel = hiltViewModel<MovieDetailsViewModel, MovieDetailsViewModel.MovieDetailsViewModelFactory>{
+        it.create(movieId = movieId)
+    }
 
     // TODO: - Move this to ViewModel
     val movieDetailsScreenTabs = listOf(stringResource(R.string.more_like_this), stringResource(R.string.trailers_and_more))
