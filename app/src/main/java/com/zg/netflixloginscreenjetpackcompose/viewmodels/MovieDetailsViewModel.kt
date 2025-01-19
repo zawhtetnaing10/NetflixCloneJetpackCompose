@@ -96,18 +96,16 @@ class MovieDetailsViewModel @AssistedInject constructor(
      */
     private suspend fun fetchRelatedMovies(genres: List<Genre>) {
         try {
-            // Fetch related movies and remove duplicates
+            // Fetch related movies and remove duplicates and take a set amount of related movies
             val relatedMovies = movieDataRepository.fetchMoviesByGenreList(genreList = genres)
                 .toList()
                 .flatten()
                 .distinctBy { it.id }
-                .take(RELATED_MOVIE_COUNT)
-
             // Remove the current movie
             val relatedMoviesToShow = relatedMovies.toMutableList()
             relatedMoviesToShow.removeIf { it.id ==  _detailsScreenState.value.movie?.id}
 
-            _detailsScreenState.value = _detailsScreenState.value.copy(relatedMovies = relatedMoviesToShow)
+            _detailsScreenState.value = _detailsScreenState.value.copy(relatedMovies = relatedMoviesToShow.take(RELATED_MOVIE_COUNT))
         } catch (e: Exception) {
             _detailsScreenState.value = _detailsScreenState.value.copy(errorMessage = e.message ?: "")
         }
