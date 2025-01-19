@@ -2,6 +2,7 @@ package com.zg.netflixloginscreenjetpackcompose.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.zg.netflixloginscreenjetpackcompose.data.models.Actor
 import com.zg.netflixloginscreenjetpackcompose.data.models.Movie
 import com.zg.netflixloginscreenjetpackcompose.data.repository.MovieDataRepository
 import dagger.assisted.Assisted
@@ -29,6 +30,7 @@ class MovieDetailsViewModel @AssistedInject constructor(
     init {
         viewModelScope.launch {
             launch { fetchMovieDetails(movieId = movieId) }
+            launch { fetchCreditsByMovie(movieId = movieId) }
         }
     }
 
@@ -45,6 +47,24 @@ class MovieDetailsViewModel @AssistedInject constructor(
             }
     }
 
+    /**
+     * Fetch Credits for Movie
+     */
+    private suspend fun fetchCreditsByMovie(movieId: Int) {
+        movieDataRepository.fetchCreditsByMovie(movieId = movieId)
+            .catch {
+                _detailsScreenState.value = _detailsScreenState.value.copy(errorMessage = it.message ?: "")
+            }
+            .collect {
+                _detailsScreenState.value = _detailsScreenState.value.copy(
+                    cast = it.cast,
+                    crew = it.crew
+                )
+            }
+    }
+
+    
+
     @AssistedFactory
     interface MovieDetailsViewModelFactory {
         fun create(movieId: Int): MovieDetailsViewModel
@@ -54,5 +74,7 @@ class MovieDetailsViewModel @AssistedInject constructor(
 data class MovieDetailsScreenState(
     val movie: Movie? = null,
     val errorMessage: String = "",
-    val isLoading: Boolean = false
+    val isLoading: Boolean = false,
+    val cast: List<Actor>? = null,
+    val crew: List<Actor>? = null
 )

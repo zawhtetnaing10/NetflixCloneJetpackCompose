@@ -3,6 +3,7 @@ package com.zg.netflixloginscreenjetpackcompose.data.repository
 import com.zg.netflixloginscreenjetpackcompose.data.models.Movie
 import com.zg.netflixloginscreenjetpackcompose.firebase.FirebaseCredentialProvider
 import com.zg.netflixloginscreenjetpackcompose.network.MoviesApi
+import com.zg.netflixloginscreenjetpackcompose.network.responses.CreditResponse
 import com.zg.netflixloginscreenjetpackcompose.persistence.DataStoreUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -73,9 +74,20 @@ class MovieDataRepository @Inject constructor(
     /**
      * Fetch movie details from network.
      */
-    fun fetchMovieDetails(movieId : Int) : Flow<Movie?>{
+    fun fetchMovieDetails(movieId: Int): Flow<Movie?> {
         return getApiKey()
             .transform { emit(moviesApi.getMovieDetails(authorization = it, movieId = movieId)) }
+            .flowOn(Dispatchers.IO)
+    }
+
+    /**
+     * Get credits by movie.
+     * @param movieId The id of the movie to get the credits
+     * @return Credits including cast and crew for the movie.
+     */
+    fun fetchCreditsByMovie(movieId: Int): Flow<CreditResponse> {
+        return getApiKey()
+            .transform { emit(moviesApi.getCreditsByMovie(authorization = it, movieId = movieId)) }
             .flowOn(Dispatchers.IO)
     }
 
@@ -85,7 +97,7 @@ class MovieDataRepository @Inject constructor(
      * Then return the apiKey.
      */
     private fun getApiKey(): Flow<String> {
-        return flow{ emit (dataStoreUtils.getApiKeyFromDataStore()) }
+        return flow { emit(dataStoreUtils.getApiKeyFromDataStore()) }
             .flatMapLatest {
                 if (it.isNotBlank())
                     flowOf("Bearer $it")
