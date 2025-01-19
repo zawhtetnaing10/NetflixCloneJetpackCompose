@@ -31,6 +31,7 @@ class MovieDetailsViewModel @AssistedInject constructor(
         viewModelScope.launch {
             launch { fetchMovieDetails(movieId = movieId) }
             launch { fetchCreditsByMovie(movieId = movieId) }
+            // TODO: - get trailer
         }
     }
 
@@ -63,7 +64,7 @@ class MovieDetailsViewModel @AssistedInject constructor(
             }
     }
 
-    
+
 
     @AssistedFactory
     interface MovieDetailsViewModelFactory {

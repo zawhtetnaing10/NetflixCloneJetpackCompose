@@ -46,6 +46,7 @@ import com.zg.netflixloginscreenjetpackcompose.ui.resusable_composables.NetflixF
 import com.zg.netflixloginscreenjetpackcompose.ui.resusable_composables.NetflixRoundedButton
 import com.zg.netflixloginscreenjetpackcompose.ui.resusable_composables.NetflixTabBar
 import com.zg.netflixloginscreenjetpackcompose.ui.resusable_composables.VideoPlayer
+import com.zg.netflixloginscreenjetpackcompose.ui.resusable_composables.YoutubeVideoPlayer
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.Black
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.MARGIN_LARGE
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.MARGIN_MEDIUM
@@ -110,7 +111,7 @@ fun MovieDetailsContent(movie: Movie?, tabs: List<String>, modifier: Modifier = 
     Surface(color = Black, modifier = modifier.fillMaxSize()) {
         Column {
             // Video Player
-            VideoPlayer(modifier = Modifier.fillMaxWidth())
+            YoutubeVideoPlayer(videoKey = "z3PB6WAsaJo", modifier = Modifier.fillMaxWidth())
             // Body
             MovieDetailsBody(movie = movie, tabs = tabs)
         }
