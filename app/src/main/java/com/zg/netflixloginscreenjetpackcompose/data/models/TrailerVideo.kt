@@ -25,4 +25,14 @@ data class TrailerVideo(
     val publishedAt: String,
     @SerialName("id")
     val id: String
-)
+) {
+    /**
+     * Checks if the video is Youtube.
+     */
+    fun isYoutubeVideo() : Boolean {
+        return site == YOUTUBE_VIDEO
+    }
+}
+
+// Youtube video type
+const val YOUTUBE_VIDEO = "YouTube"

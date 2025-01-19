@@ -1,5 +1,6 @@
 package com.zg.netflixloginscreenjetpackcompose.ui.screens.movie_details
 
+import android.provider.MediaStore
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -38,7 +39,9 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.zg.netflixloginscreenjetpackcompose.R
+import com.zg.netflixloginscreenjetpackcompose.data.models.Actor
 import com.zg.netflixloginscreenjetpackcompose.data.models.Movie
+import com.zg.netflixloginscreenjetpackcompose.data.models.TrailerVideo
 import com.zg.netflixloginscreenjetpackcompose.ui.list_items.MovieListItem
 import com.zg.netflixloginscreenjetpackcompose.ui.navigation.NavRoutes
 import com.zg.netflixloginscreenjetpackcompose.ui.resusable_composables.MovieReleaseInfo
@@ -78,6 +81,10 @@ fun MovieDetailsScreen(movieId: Int, onTapBack: () -> Unit, modifier: Modifier =
     Scaffold(topBar = { MovieDetailsAppbar(onTapBack = onTapBack) }, modifier = modifier.fillMaxSize()) { paddingValues ->
         MovieDetailsContent(
             movie = detailsScreenState.movie,
+            trailer = detailsScreenState.trailer,
+            cast = detailsScreenState.cast,
+            crew = detailsScreenState.crew,
+            relatedMovies = detailsScreenState.relatedMovies,
             tabs = movieDetailsScreenTabs,
             modifier = Modifier.padding(bottom = paddingValues.calculateBottomPadding())
         )
@@ -107,19 +114,34 @@ fun MovieDetailsAppbar(onTapBack: () -> Unit, modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun MovieDetailsContent(movie: Movie?, tabs: List<String>, modifier: Modifier = Modifier) {
+fun MovieDetailsContent(
+    movie: Movie?,
+    trailer: TrailerVideo?,
+    cast: List<Actor>?,
+    crew: List<Actor>?,
+    relatedMovies: List<Movie>?,
+    tabs: List<String>,
+    modifier: Modifier = Modifier
+) {
     Surface(color = Black, modifier = modifier.fillMaxSize()) {
         Column {
             // Video Player
-            YoutubeVideoPlayer(videoKey = "z3PB6WAsaJo", modifier = Modifier.fillMaxWidth())
+            if (trailer != null && trailer.isYoutubeVideo())
+                YoutubeVideoPlayer(videoKey = trailer.key, modifier = Modifier.fillMaxWidth())
             // Body
-            MovieDetailsBody(movie = movie, tabs = tabs)
+            MovieDetailsBody(movie = movie, cast = cast, crew = crew, relatedMovies = relatedMovies, tabs = tabs)
         }
     }
 }
 
 @Composable
-fun MovieDetailsBody(movie: Movie?, tabs: List<String>, modifier: Modifier = Modifier) {
+fun MovieDetailsBody(
+    movie: Movie?,
+    cast: List<Actor>?,
+    crew: List<Actor>?,
+    relatedMovies: List<Movie>?,
+    tabs: List<String>, modifier: Modifier = Modifier
+) {
     LazyColumn(
         modifier = modifier
             .padding(MARGIN_MEDIUM_2)

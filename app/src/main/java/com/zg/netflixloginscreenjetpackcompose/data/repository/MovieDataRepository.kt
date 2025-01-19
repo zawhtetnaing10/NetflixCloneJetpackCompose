@@ -58,7 +58,6 @@ class MovieDataRepository @Inject constructor(
         }
     }
 
-    // TODO: - This flow is not completing. Need to find out why.
     fun fetchMoviesByGenre(): Flow<Pair<String, List<Movie>>> {
         return getApiKey()
             .flatMapLatest(::fetchMoviesByGenreFlow)
@@ -79,16 +78,16 @@ class MovieDataRepository @Inject constructor(
      * Wrapper for fetchMoviesByGenreListFlow function together with getApiKey flow
      * Will be called from ViewModel.
      */
-    fun fetchMoviesByGenreList(genreList : List<Genre>) : Flow<List<Movie>> {
-       return getApiKey()
-           .flatMapLatest { fetchMoviesByGenreListFlow(apiKey = it, genreList = genreList) }
-           .flowOn(Dispatchers.IO)
+    fun fetchMoviesByGenreList(genreList: List<Genre>): Flow<List<Movie>> {
+        return getApiKey()
+            .flatMapLatest { fetchMoviesByGenreListFlow(apiKey = it, genreList = genreList) }
+            .flowOn(Dispatchers.IO)
     }
 
     /**
      * Fetches Movies By a given genre list
      */
-    private fun fetchMoviesByGenreListFlow(apiKey: String, genreList: List<Genre>) : Flow<List<Movie>> {
+    private fun fetchMoviesByGenreListFlow(apiKey: String, genreList: List<Genre>): Flow<List<Movie>> {
         return genreList.asFlow()
             .transform {
                 val moviesByGenre = moviesApi.getMoviesByGenre(authorization = apiKey, genreId = it.id).movieList ?: listOf()
@@ -123,12 +122,12 @@ class MovieDataRepository @Inject constructor(
      * Then it filters out the "Youtube" videos
      * Then takes the first one.
      */
-    fun fetchTrailerForMovie(movieId: Int) : Flow<TrailerVideo?> {
+    fun fetchTrailerForMovie(movieId: Int): Flow<TrailerVideo?> {
         return getApiKey()
             .transform { emit(moviesApi.getVideos(authorization = it, movieId = movieId)) }
             .map { it.results }
             .flatMapConcat { it.asFlow() }
-            .filter { it.site == "Youtube" }
+            .filter { it.isYoutubeVideo() }
             .take(1)
     }
 
