@@ -1,5 +1,6 @@
 package com.zg.netflixloginscreenjetpackcompose.data.repository
 
+import com.zg.netflixloginscreenjetpackcompose.data.models.Genre
 import com.zg.netflixloginscreenjetpackcompose.data.models.Movie
 import com.zg.netflixloginscreenjetpackcompose.data.models.TrailerVideo
 import com.zg.netflixloginscreenjetpackcompose.firebase.FirebaseCredentialProvider
@@ -71,6 +72,27 @@ class MovieDataRepository @Inject constructor(
             .transform {
                 val moviesByGenre = moviesApi.getMoviesByGenre(authorization = apiKey, genreId = it.id).movieList ?: listOf()
                 emit(Pair(it.name, moviesByGenre))
+            }
+    }
+
+    /**
+     * Wrapper for fetchMoviesByGenreListFlow function together with getApiKey flow
+     * Will be called from ViewModel.
+     */
+    fun fetchMoviesByGenreList(genreList : List<Genre>) : Flow<List<Movie>> {
+       return getApiKey()
+           .flatMapLatest { fetchMoviesByGenreListFlow(apiKey = it, genreList = genreList) }
+           .flowOn(Dispatchers.IO)
+    }
+
+    /**
+     * Fetches Movies By a given genre list
+     */
+    private fun fetchMoviesByGenreListFlow(apiKey: String, genreList: List<Genre>) : Flow<List<Movie>> {
+        return genreList.asFlow()
+            .transform {
+                val moviesByGenre = moviesApi.getMoviesByGenre(authorization = apiKey, genreId = it.id).movieList ?: listOf()
+                emit(moviesByGenre)
             }
     }
 

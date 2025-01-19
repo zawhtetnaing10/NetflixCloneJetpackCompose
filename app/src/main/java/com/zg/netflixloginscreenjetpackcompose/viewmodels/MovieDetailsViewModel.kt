@@ -3,6 +3,7 @@ package com.zg.netflixloginscreenjetpackcompose.viewmodels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.zg.netflixloginscreenjetpackcompose.data.models.Actor
+import com.zg.netflixloginscreenjetpackcompose.data.models.Genre
 import com.zg.netflixloginscreenjetpackcompose.data.models.Movie
 import com.zg.netflixloginscreenjetpackcompose.data.models.TrailerVideo
 import com.zg.netflixloginscreenjetpackcompose.data.repository.MovieDataRepository
@@ -13,6 +14,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.launch
 
 /**
@@ -24,6 +26,11 @@ class MovieDetailsViewModel @AssistedInject constructor(
     private val movieDataRepository: MovieDataRepository,
 ) : ViewModel() {
 
+    @AssistedFactory
+    interface MovieDetailsViewModelFactory {
+        fun create(movieId: Int): MovieDetailsViewModel
+    }
+
     // State
     private val _detailsScreenState = MutableStateFlow(MovieDetailsScreenState())
     val detailsScreenState: StateFlow<MovieDetailsScreenState> get() = _detailsScreenState
@@ -33,7 +40,6 @@ class MovieDetailsViewModel @AssistedInject constructor(
             launch { fetchMovieDetails(movieId = movieId) }
             launch { fetchCreditsByMovie(movieId = movieId) }
             launch { fetchTrailer(movieId = movieId) }
-            // TODO: - get related movies.
         }
     }
 
@@ -47,6 +53,9 @@ class MovieDetailsViewModel @AssistedInject constructor(
             }
             .collect {
                 _detailsScreenState.value = _detailsScreenState.value.copy(movie = it)
+
+                // Fetch Related Movies
+                fetchRelatedMovies(it?.genres ?: listOf())
             }
     }
 
@@ -69,23 +78,28 @@ class MovieDetailsViewModel @AssistedInject constructor(
     /**
      * Fetches trailer for movie
      */
-    private suspend fun fetchTrailer(movieId : Int){
+    private suspend fun fetchTrailer(movieId: Int) {
         movieDataRepository.fetchTrailerForMovie(movieId = movieId)
             .catch {
                 _detailsScreenState.value = _detailsScreenState.value.copy(errorMessage = it.message ?: "")
             }
             .collect {
                 _detailsScreenState.value = _detailsScreenState.value.copy(
-                    trailer =  it
+                    trailer = it
                 )
             }
     }
 
-
-
-    @AssistedFactory
-    interface MovieDetailsViewModelFactory {
-        fun create(movieId: Int): MovieDetailsViewModel
+    /**
+     * Related movies
+     */
+    private suspend fun fetchRelatedMovies(genres: List<Genre>) {
+        try {
+            val relatedMovies = movieDataRepository.fetchMoviesByGenreList(genreList = genres).toList().flatten()
+            _detailsScreenState.value = _detailsScreenState.value.copy(relatedMovies = relatedMovies)
+        } catch (e: Exception) {
+            _detailsScreenState.value = _detailsScreenState.value.copy(errorMessage = e.message ?: "")
+        }
     }
 }
 
@@ -96,4 +110,5 @@ data class MovieDetailsScreenState(
     val cast: List<Actor>? = null,
     val crew: List<Actor>? = null,
     val trailer: TrailerVideo? = null,
+    val relatedMovies: List<Movie>? = null,
 )
