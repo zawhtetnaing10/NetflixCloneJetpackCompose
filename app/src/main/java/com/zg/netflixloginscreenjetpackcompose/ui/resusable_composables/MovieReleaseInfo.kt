@@ -21,10 +21,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.zg.netflixloginscreenjetpackcompose.R
+import com.zg.netflixloginscreenjetpackcompose.data.models.Movie
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.LINE_HEIGHT_SMALL
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.LINE_HEIGHT_SMALL_2X
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.MARGIN_LARGE
@@ -44,14 +46,14 @@ import com.zg.netflixloginscreenjetpackcompose.ui.theme.White
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun MovieReleaseInfo(modifier: Modifier = Modifier) {
+fun MovieReleaseInfo(movie: Movie?, modifier: Modifier = Modifier) {
     FlowRow(
         horizontalArrangement = Arrangement.spacedBy(MARGIN_SMALL),
         verticalArrangement = Arrangement.spacedBy(MARGIN_MEDIUM),
         modifier = modifier
     ) {
         Text(
-            "2024", color = White,
+            movie?.getReleaseYear() ?: "", color = White,
             fontFamily = NetflixSansFontFamily,
             fontSize = TEXT_REGULAR
         )
@@ -64,7 +66,7 @@ fun MovieReleaseInfo(modifier: Modifier = Modifier) {
             )
         }
         Text(
-            "1h 59m", color = White,
+            movie?.getRuntimeFormatted() ?: "", color = White,
             fontFamily = NetflixSansFontFamily,
             fontSize = TEXT_REGULAR
         )
@@ -98,7 +100,7 @@ fun MovieReleaseInfo(modifier: Modifier = Modifier) {
             )
             Column {
                 Text(
-                    "Spatial",
+                    stringResource(R.string.spatial),
                     fontSize = TEXT_SMALL_2X,
                     color = MovieDetailsIcon,
                     fontWeight = FontWeight.Bold,
@@ -106,7 +108,7 @@ fun MovieReleaseInfo(modifier: Modifier = Modifier) {
                     lineHeight = LINE_HEIGHT_SMALL_2X
                 )
                 Text(
-                    "Audio",
+                    stringResource(R.string.audio),
                     fontSize = TEXT_SMALL_3X,
                     color = MovieDetailsIcon,
                     fontWeight = FontWeight.Normal,
@@ -136,6 +138,6 @@ fun MovieReleaseInfo(modifier: Modifier = Modifier) {
 @Composable
 private fun MovieReleaseInfoPreview() {
     NetflixCloneJetpackComposeTheme {
-        MovieReleaseInfo()
+        MovieReleaseInfo(movie = null)
     }
 }

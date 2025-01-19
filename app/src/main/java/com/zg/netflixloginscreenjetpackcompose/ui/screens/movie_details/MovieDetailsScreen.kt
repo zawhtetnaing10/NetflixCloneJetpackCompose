@@ -1,6 +1,5 @@
 package com.zg.netflixloginscreenjetpackcompose.ui.screens.movie_details
 
-import android.provider.MediaStore
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -14,8 +13,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.PlayArrow
@@ -35,20 +32,17 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.zg.netflixloginscreenjetpackcompose.R
-import com.zg.netflixloginscreenjetpackcompose.data.models.Actor
+import com.zg.netflixloginscreenjetpackcompose.data.models.CastAndCrew
 import com.zg.netflixloginscreenjetpackcompose.data.models.Movie
 import com.zg.netflixloginscreenjetpackcompose.data.models.TrailerVideo
 import com.zg.netflixloginscreenjetpackcompose.ui.list_items.MovieListItem
-import com.zg.netflixloginscreenjetpackcompose.ui.navigation.NavRoutes
 import com.zg.netflixloginscreenjetpackcompose.ui.resusable_composables.MovieReleaseInfo
 import com.zg.netflixloginscreenjetpackcompose.ui.resusable_composables.NetflixFilmLogo
 import com.zg.netflixloginscreenjetpackcompose.ui.resusable_composables.NetflixRoundedButton
 import com.zg.netflixloginscreenjetpackcompose.ui.resusable_composables.NetflixTabBar
-import com.zg.netflixloginscreenjetpackcompose.ui.resusable_composables.VideoPlayer
 import com.zg.netflixloginscreenjetpackcompose.ui.resusable_composables.YoutubeVideoPlayer
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.Black
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.MARGIN_LARGE
@@ -117,8 +111,8 @@ fun MovieDetailsAppbar(onTapBack: () -> Unit, modifier: Modifier = Modifier) {
 fun MovieDetailsContent(
     movie: Movie?,
     trailer: TrailerVideo?,
-    cast: List<Actor>?,
-    crew: List<Actor>?,
+    cast: List<CastAndCrew>?,
+    crew: List<CastAndCrew>?,
     relatedMovies: List<Movie>?,
     tabs: List<String>,
     modifier: Modifier = Modifier
@@ -137,8 +131,8 @@ fun MovieDetailsContent(
 @Composable
 fun MovieDetailsBody(
     movie: Movie?,
-    cast: List<Actor>?,
-    crew: List<Actor>?,
+    cast: List<CastAndCrew>?,
+    crew: List<CastAndCrew>?,
     relatedMovies: List<Movie>?,
     tabs: List<String>, modifier: Modifier = Modifier
 ) {
@@ -156,14 +150,14 @@ fun MovieDetailsBody(
         // Spacer
         item { Spacer(Modifier.height(MARGIN_MEDIUM)) }
         // Movie Release Info
-        item { MovieReleaseInfo() }
+        item { MovieReleaseInfo(movie = movie) }
         item { Spacer(Modifier.height(MARGIN_MEDIUM_2)) }
         // Play and Download Buttons
         item { PlayAndDownloadButtons() }
         item { Spacer(Modifier.height(MARGIN_MEDIUM_2)) }
         item {
             Text(
-                "A crowded airport. A dangerous suitcase. A mysterious criminal mastermind. On Christmas Eve, a security officer faces the ultimate travel nightmare.",
+                movie?.overview ?: "",
                 color = White,
                 fontFamily = NetflixSansFontFamily,
                 fontWeight = FontWeight.Normal,
@@ -174,7 +168,7 @@ fun MovieDetailsBody(
         item { Spacer(Modifier.height(MARGIN_MEDIUM_2)) }
         item {
             // Actors And Directors
-            ActorsAndDirector(onTapMoreActors = { })
+            ActorsAndDirector(cast = cast, crew = crew, onTapMoreActors = { })
         }
         item { Spacer(Modifier.height(MARGIN_LARGE)) }
         // Action Buttons
@@ -182,29 +176,33 @@ fun MovieDetailsBody(
         item {
             Spacer(Modifier.height(MARGIN_LARGE))
         }
-        item {
-            NetflixTabBar(tabs)
-        }
-        item {
-            // Grid
-            LazyVerticalGrid(
-                columns = GridCells.Fixed(3),
-                verticalArrangement = Arrangement.spacedBy(MARGIN_MEDIUM_2),
-                contentPadding = PaddingValues(vertical = MARGIN_LARGE),
-                // TODO: - replace with real data from view model
-                modifier = Modifier.height(
-                    calculateHeightForGrid(
-                        noOfItems = 12,
-                        noOfColumns = 3,
-                        heightPerItem = MOVIE_IMAGE_HEIGHT + MARGIN_LARGE
-                    )
-                ) // Added a bit more height to avoid nested scrolling
-            ) {
-                items((1..12).toList()) {
-                    MovieListItem(movie = null, onTapMovie = {})
+
+        // Related Movies Tab
+        if(relatedMovies?.isNotEmpty() == true)
+            item {
+                NetflixTabBar(tabs)
+            }
+        // All Related Movies
+        if(relatedMovies?.isNotEmpty() == true)
+            item {
+                // Grid
+                LazyVerticalGrid(
+                    columns = GridCells.Fixed(3),
+                    verticalArrangement = Arrangement.spacedBy(MARGIN_MEDIUM_2),
+                    contentPadding = PaddingValues(vertical = MARGIN_LARGE),
+                    modifier = Modifier.height(
+                        calculateHeightForGrid(
+                            noOfItems = relatedMovies.count(),
+                            noOfColumns = 3,
+                            heightPerItem = MOVIE_IMAGE_HEIGHT + MARGIN_LARGE
+                        )
+                    ) // Added a bit more height to avoid nested scrolling
+                ) {
+                    items(relatedMovies) {
+                        MovieListItem(movie = it, onTapMovie = {})
+                    }
                 }
             }
-        }
     }
 }
 

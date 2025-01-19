@@ -2,11 +2,12 @@ package com.zg.netflixloginscreenjetpackcompose.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.zg.netflixloginscreenjetpackcompose.data.models.Actor
+import com.zg.netflixloginscreenjetpackcompose.data.models.CastAndCrew
 import com.zg.netflixloginscreenjetpackcompose.data.models.Genre
 import com.zg.netflixloginscreenjetpackcompose.data.models.Movie
 import com.zg.netflixloginscreenjetpackcompose.data.models.TrailerVideo
 import com.zg.netflixloginscreenjetpackcompose.data.repository.MovieDataRepository
+import com.zg.netflixloginscreenjetpackcompose.utils.RELATED_MOVIE_COUNT
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
@@ -95,8 +96,18 @@ class MovieDetailsViewModel @AssistedInject constructor(
      */
     private suspend fun fetchRelatedMovies(genres: List<Genre>) {
         try {
-            val relatedMovies = movieDataRepository.fetchMoviesByGenreList(genreList = genres).toList().flatten()
-            _detailsScreenState.value = _detailsScreenState.value.copy(relatedMovies = relatedMovies)
+            // Fetch related movies and remove duplicates
+            val relatedMovies = movieDataRepository.fetchMoviesByGenreList(genreList = genres)
+                .toList()
+                .flatten()
+                .distinctBy { it.id }
+                .take(RELATED_MOVIE_COUNT)
+
+            // Remove the current movie
+            val relatedMoviesToShow = relatedMovies.toMutableList()
+            relatedMoviesToShow.removeIf { it.id ==  _detailsScreenState.value.movie?.id}
+
+            _detailsScreenState.value = _detailsScreenState.value.copy(relatedMovies = relatedMoviesToShow)
         } catch (e: Exception) {
             _detailsScreenState.value = _detailsScreenState.value.copy(errorMessage = e.message ?: "")
         }
@@ -107,8 +118,8 @@ data class MovieDetailsScreenState(
     val movie: Movie? = null,
     val errorMessage: String = "",
     val isLoading: Boolean = false,
-    val cast: List<Actor>? = null,
-    val crew: List<Actor>? = null,
+    val cast: List<CastAndCrew>? = null,
+    val crew: List<CastAndCrew>? = null,
     val trailer: TrailerVideo? = null,
     val relatedMovies: List<Movie>? = null,
 )

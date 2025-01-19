@@ -8,43 +8,58 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.LinkAnnotation
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextLinkStyles
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withLink
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import com.zg.netflixloginscreenjetpackcompose.R
+import com.zg.netflixloginscreenjetpackcompose.data.models.CastAndCrew
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.CastTextColor
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.LINE_HEIGHT_SMALL
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.NetflixCloneJetpackComposeTheme
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.NetflixSansFontFamily
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.TEXT_SMALL
-import com.zg.netflixloginscreenjetpackcompose.ui.theme.TEXT_SMALL_3X
 
 
 @Composable
-fun ActorsAndDirector(onTapMoreActors: () -> Unit, modifier: Modifier = Modifier) {
+fun ActorsAndDirector(
+    cast: List<CastAndCrew>?,
+    crew: List<CastAndCrew>?,
+    onTapMoreActors: () -> Unit, modifier: Modifier = Modifier
+) {
+
+    val directorName = crew?.firstOrNull { it.isDirector() }?.name
+
     Column(modifier = modifier) {
         // Actors
-        ActorsWithSeeMore(onTapMoreActors = onTapMoreActors)
+        if(cast != null)
+            ActorsWithSeeMore(
+                cast = cast,
+                onTapMoreActors = onTapMoreActors
+            )
 
         // Director
-        Text(
-            "Director: Jaume Collet-Serra",
-            color = CastTextColor,
-            fontSize = TEXT_SMALL,
-            lineHeight = LINE_HEIGHT_SMALL,
-            fontFamily = NetflixSansFontFamily
-        )
+        if(directorName != null)
+            Text(
+                "Director: $directorName",
+                color = CastTextColor,
+                fontSize = TEXT_SMALL,
+                lineHeight = LINE_HEIGHT_SMALL,
+                fontFamily = NetflixSansFontFamily
+            )
     }
 }
 
 @Composable
-fun ActorsWithSeeMore(onTapMoreActors: () -> Unit, modifier: Modifier = Modifier) {
+fun ActorsWithSeeMore(
+    cast: List<CastAndCrew>,
+    onTapMoreActors: () -> Unit,
+    modifier: Modifier = Modifier
+) {
     // Annotated String
     val actorsAnnotatedString = buildAnnotatedString {
         withStyle(style = SpanStyle(color = CastTextColor, fontSize = TEXT_SMALL, fontFamily = NetflixSansFontFamily)) {
-            append("Cast: Taron Egerton, Sofia Carson, Jason Bateman ")
+            append("Cast: ${cast.take(3).joinToString(",") { it.name }} ")
         }
 
         withLink(
@@ -66,6 +81,6 @@ fun ActorsWithSeeMore(onTapMoreActors: () -> Unit, modifier: Modifier = Modifier
 @Composable
 private fun ActorsWithSeeMorePreview() {
     NetflixCloneJetpackComposeTheme {
-        ActorsAndDirector(onTapMoreActors = {})
+        ActorsAndDirector(cast = listOf(), crew = listOf(), onTapMoreActors = {})
     }
 }

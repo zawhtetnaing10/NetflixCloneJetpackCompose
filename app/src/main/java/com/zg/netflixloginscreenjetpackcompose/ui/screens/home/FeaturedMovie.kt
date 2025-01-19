@@ -76,7 +76,7 @@ fun FeaturedMovie(movie: Movie?, onTapMovie: (Int) -> Unit, modifier: Modifier =
         Box {
             // Image
             AsyncImage(
-                "$FEATURED_MOVIE_IMAGE_BASE_URL${movie?.backdropPath}",
+                movie?.getFullFeaturedMovieImagePath() ?: "",
                 contentScale = ContentScale.Crop,
                 contentDescription = null,
                 modifier = Modifier.fillMaxSize()

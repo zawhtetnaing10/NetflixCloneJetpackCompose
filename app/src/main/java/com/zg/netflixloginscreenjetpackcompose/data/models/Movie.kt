@@ -90,7 +90,7 @@ data class Movie(
      * Gets the back drop image path for featured movie
      * This will be in 1200 px width
      */
-    fun getFullFeaturedMovieImagePath() : String {
+    fun getFullFeaturedMovieImagePath(): String {
         return "$FEATURED_MOVIE_IMAGE_BASE_URL$backdropPath"
     }
 
@@ -98,7 +98,24 @@ data class Movie(
      * Gets the poster image path for featured movie
      * This will be in 400 px width
      */
-    fun getFullPosterPath() : String{
+    fun getFullPosterPath(): String {
         return "$GENERAL_MOVIE_IMAGE_BASE_URL$posterPath"
+    }
+
+    /**
+     * Returns the release year of the function
+     */
+    fun getReleaseYear(): String {
+        return releaseDate?.split("-")?.first() ?: ""
+    }
+
+    /**
+     * Get run time in 1h 59m format
+     */
+    fun getRuntimeFormatted(): String {
+        if(runtime == null) return ""
+        val hours = runtime / 60
+        val minutes = runtime % 60
+        return "${hours}h ${minutes}m"
     }
 }
