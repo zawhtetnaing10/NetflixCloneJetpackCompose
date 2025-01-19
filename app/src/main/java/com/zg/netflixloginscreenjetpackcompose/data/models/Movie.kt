@@ -1,9 +1,15 @@
 package com.zg.netflixloginscreenjetpackcompose.data.models
 
+import com.google.type.DateTime
 import com.zg.netflixloginscreenjetpackcompose.utils.FEATURED_MOVIE_IMAGE_BASE_URL
 import com.zg.netflixloginscreenjetpackcompose.utils.GENERAL_MOVIE_IMAGE_BASE_URL
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.util.Calendar
+import java.util.Locale
 
 @Serializable
 data class Movie(
@@ -117,5 +123,20 @@ data class Movie(
         val hours = runtime / 60
         val minutes = runtime % 60
         return "${hours}h ${minutes}m"
+    }
+
+    /**
+     * Checks if the movie is recently released
+     * The movie is recently released if the current date falls within one week of release date
+     */
+    fun isRecentlyReleased(): Boolean {
+        // Guard
+        if(releaseDate.isNullOrEmpty()) return false
+
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        val givenDate = dateFormat.parse(releaseDate) ?: return false
+        val currentDate = Calendar.getInstance()
+        val oneWeekBefore = Calendar.getInstance().apply { add(Calendar.DAY_OF_YEAR, -7) }
+        return givenDate.after(oneWeekBefore.time) && givenDate.before(currentDate.time)
     }
 }

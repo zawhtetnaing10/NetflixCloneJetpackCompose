@@ -42,23 +42,24 @@ fun MovieListItem(movie: Movie?, onTapMovie: (Int) -> Unit, modifier: Modifier =
             )
         }
 
-        // Sub Text
-        Surface(
-            shape = RoundedCornerShape(topStart = MARGIN_SMALL_2X, topEnd = MARGIN_SMALL_2X),
-            color = NetflixRedPrimary,
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .width(HOME_SCREEN_SUB_TEXT_WIDTH)
-        ) {
-            Box(contentAlignment = Alignment.Center) {
-                Text(
-                    stringResource(R.string.recently_added), color = White,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = TEXT_SMALL_3X,
-                    lineHeight = LINE_HEIGHT_SMALL
-                )
+        // Recently released
+        if(movie?.isRecentlyReleased() == true)
+            Surface(
+                shape = RoundedCornerShape(topStart = MARGIN_SMALL_2X, topEnd = MARGIN_SMALL_2X),
+                color = NetflixRedPrimary,
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .width(HOME_SCREEN_SUB_TEXT_WIDTH)
+            ) {
+                Box(contentAlignment = Alignment.Center) {
+                    Text(
+                        stringResource(R.string.recently_added), color = White,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = TEXT_SMALL_3X,
+                        lineHeight = LINE_HEIGHT_SMALL
+                    )
+                }
             }
-        }
     }
 }
 
