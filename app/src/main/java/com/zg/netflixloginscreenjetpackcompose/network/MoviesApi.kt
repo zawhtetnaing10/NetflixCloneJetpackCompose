@@ -4,6 +4,7 @@ import com.zg.netflixloginscreenjetpackcompose.data.models.Movie
 import com.zg.netflixloginscreenjetpackcompose.network.responses.CreditResponse
 import com.zg.netflixloginscreenjetpackcompose.network.responses.GenreListResponse
 import com.zg.netflixloginscreenjetpackcompose.network.responses.MovieListResponse
+import com.zg.netflixloginscreenjetpackcompose.network.responses.VideoResponse
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
@@ -41,4 +42,10 @@ interface MoviesApi {
         @Header(HEADER_AUTHORIZATION) authorization: String,
         @Path("movie_id") movieId: Int,
     ): CreditResponse
+
+    @GET("$ENDPOINT_CREDITS/{movie_id}/videos")
+    suspend fun getVideos(
+        @Header(HEADER_AUTHORIZATION) authorization: String,
+        @Path("movie_id") movieId: Int,
+    ): VideoResponse
 }

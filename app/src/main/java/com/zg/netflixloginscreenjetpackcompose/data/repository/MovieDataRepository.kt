@@ -1,6 +1,7 @@
 package com.zg.netflixloginscreenjetpackcompose.data.repository
 
 import com.zg.netflixloginscreenjetpackcompose.data.models.Movie
+import com.zg.netflixloginscreenjetpackcompose.data.models.TrailerVideo
 import com.zg.netflixloginscreenjetpackcompose.firebase.FirebaseCredentialProvider
 import com.zg.netflixloginscreenjetpackcompose.network.MoviesApi
 import com.zg.netflixloginscreenjetpackcompose.network.responses.CreditResponse
@@ -9,14 +10,16 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flatMapMerge
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.flow.transform
-import okhttp3.Dispatcher
 import javax.inject.Inject
 
 /**
@@ -89,6 +92,22 @@ class MovieDataRepository @Inject constructor(
         return getApiKey()
             .transform { emit(moviesApi.getCreditsByMovie(authorization = it, movieId = movieId)) }
             .flowOn(Dispatchers.IO)
+    }
+
+    /**
+     * Fetches trailer for a movie
+     * First it maps the response into the video list
+     * Then it flatMaps each video into a flow
+     * Then it filters out the "Youtube" videos
+     * Then takes the first one.
+     */
+    fun fetchTrailerForMovie(movieId: Int) : Flow<TrailerVideo?> {
+        return getApiKey()
+            .transform { emit(moviesApi.getVideos(authorization = it, movieId = movieId)) }
+            .map { it.results }
+            .flatMapConcat { it.asFlow() }
+            .filter { it.site == "Youtube" }
+            .take(1)
     }
 
     /**

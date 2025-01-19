@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.zg.netflixloginscreenjetpackcompose.data.models.Actor
 import com.zg.netflixloginscreenjetpackcompose.data.models.Movie
+import com.zg.netflixloginscreenjetpackcompose.data.models.TrailerVideo
 import com.zg.netflixloginscreenjetpackcompose.data.repository.MovieDataRepository
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
@@ -31,7 +32,8 @@ class MovieDetailsViewModel @AssistedInject constructor(
         viewModelScope.launch {
             launch { fetchMovieDetails(movieId = movieId) }
             launch { fetchCreditsByMovie(movieId = movieId) }
-            // TODO: - get trailer
+            launch { fetchTrailer(movieId = movieId) }
+            // TODO: - get related movies.
         }
     }
 
@@ -64,6 +66,21 @@ class MovieDetailsViewModel @AssistedInject constructor(
             }
     }
 
+    /**
+     * Fetches trailer for movie
+     */
+    private suspend fun fetchTrailer(movieId : Int){
+        movieDataRepository.fetchTrailerForMovie(movieId = movieId)
+            .catch {
+                _detailsScreenState.value = _detailsScreenState.value.copy(errorMessage = it.message ?: "")
+            }
+            .collect {
+                _detailsScreenState.value = _detailsScreenState.value.copy(
+                    trailer =  it
+                )
+            }
+    }
+
 
 
     @AssistedFactory
@@ -77,5 +94,6 @@ data class MovieDetailsScreenState(
     val errorMessage: String = "",
     val isLoading: Boolean = false,
     val cast: List<Actor>? = null,
-    val crew: List<Actor>? = null
+    val crew: List<Actor>? = null,
+    val trailer: TrailerVideo? = null,
 )
