@@ -12,10 +12,12 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.zg.netflixloginscreenjetpackcompose.R
 import com.zg.netflixloginscreenjetpackcompose.ui.resusable_composables.MobileGamesSection
 import com.zg.netflixloginscreenjetpackcompose.ui.resusable_composables.TitleAndContinueWatchingMovieListSection
 import com.zg.netflixloginscreenjetpackcompose.ui.resusable_composables.TitleAndHorizontalMovieListSection
@@ -62,7 +64,7 @@ fun HomeScreen(onTapMovie: (Int) -> Unit, viewModel: HomeViewModel = hiltViewMod
                 LazyColumn(modifier = Modifier.padding(top = 140.dp)) {
                     // Featured Movie
                     item {
-                        if(homeScreenState.featuredMovie != null)
+                        if (homeScreenState.featuredMovie != null)
                             FeaturedMovie(movie = homeScreenState.featuredMovie, onTapMovie = onTapMovie)
                     }
                     // Spacer
@@ -71,20 +73,20 @@ fun HomeScreen(onTapMovie: (Int) -> Unit, viewModel: HomeViewModel = hiltViewMod
                     }
                     // Mobile Games
                     item {
-                        if(homeScreenState.mobileGames?.isNotEmpty() == true)
+                        if (homeScreenState.mobileGames?.isNotEmpty() == true)
                             MobileGamesSection()
                     }
                     // Continue Watching Section
                     item {
-                        if(homeScreenState.continueWatching?.isNotEmpty() == true)
+                        if (homeScreenState.continueWatching?.isNotEmpty() == true)
                             TitleAndContinueWatchingMovieListSection(
-                                title = "Continue Watching",
+                                title = stringResource(R.string.continue_watching),
                                 movieList = homeScreenState.continueWatching ?: listOf(),
                                 onTapMovie = onTapMovie,
                                 modifier = Modifier.padding(top = MARGIN_MEDIUM_3)
                             )
                     }
-                    // TODO: Replace with real movie lists
+                    // Movies By Genre List
                     items(homeScreenState.moviesWithGenre ?: listOf()) {
                         // Horizontal Movie List
                         TitleAndHorizontalMovieListSection(

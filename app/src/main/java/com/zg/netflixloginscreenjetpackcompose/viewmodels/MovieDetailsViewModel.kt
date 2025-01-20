@@ -55,6 +55,11 @@ class MovieDetailsViewModel @AssistedInject constructor(
             .collect {
                 _detailsScreenState.value = _detailsScreenState.value.copy(movie = it)
 
+                // Mark movie as continue watching.
+                it?.let { movie ->
+                    movieDataRepository.markMovieAsContinueWatching(movie)
+                }
+
                 // Fetch Related Movies
                 fetchRelatedMovies(it?.genres ?: listOf())
             }

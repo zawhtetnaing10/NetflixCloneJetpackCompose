@@ -25,7 +25,21 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             launch { fetchFeaturedMovie() }
             launch { fetchMoviesByGenre() }
+            launch { observeContinueWatchingMovies() }
         }
+    }
+
+    /**
+     * Observes the Continue Watching Movies from Persistence.
+     */
+    private suspend fun observeContinueWatchingMovies(){
+        movieDataRepository.fetchContinueWatchingMoviesFlow()
+            .catch {
+                _homeScreenState.value = _homeScreenState.value.copy(errorMessage = it.message ?: "", isLoading = false)
+            }
+            .collect{
+                _homeScreenState.value = _homeScreenState.value.copy(continueWatching = it)
+            }
     }
 
     /**

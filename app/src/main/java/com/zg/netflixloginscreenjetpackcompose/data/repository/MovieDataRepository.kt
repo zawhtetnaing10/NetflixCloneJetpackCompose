@@ -1,5 +1,6 @@
 package com.zg.netflixloginscreenjetpackcompose.data.repository
 
+import android.util.Log
 import com.zg.netflixloginscreenjetpackcompose.data.models.Genre
 import com.zg.netflixloginscreenjetpackcompose.data.models.Movie
 import com.zg.netflixloginscreenjetpackcompose.data.models.TrailerVideo
@@ -7,6 +8,7 @@ import com.zg.netflixloginscreenjetpackcompose.firebase.FirebaseCredentialProvid
 import com.zg.netflixloginscreenjetpackcompose.network.MoviesApi
 import com.zg.netflixloginscreenjetpackcompose.network.responses.CreditResponse
 import com.zg.netflixloginscreenjetpackcompose.persistence.DataStoreUtils
+import com.zg.netflixloginscreenjetpackcompose.persistence.database.AppDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
@@ -31,7 +33,8 @@ import javax.inject.Inject
 class MovieDataRepository @Inject constructor(
     private val dataStoreUtils: DataStoreUtils,
     private val firebaseCredentialProvider: FirebaseCredentialProvider,
-    private val moviesApi: MoviesApi
+    private val moviesApi: MoviesApi,
+    private val movieDatabase : AppDatabase,
 ) {
 
     /**
@@ -42,6 +45,13 @@ class MovieDataRepository @Inject constructor(
         return getApiKey()
             .flatMapLatest(::fetchFeaturedMovieFlow)
             .flowOn(Dispatchers.IO)
+    }
+
+    /**
+     * Fetch movies for Continue Watching
+     */
+    fun fetchContinueWatchingMoviesFlow() : Flow<List<Movie>> {
+        return movieDatabase.movieDao().getMoviesForContinueWatching()
     }
 
     /**
@@ -105,6 +115,14 @@ class MovieDataRepository @Inject constructor(
     }
 
     /**
+     * Mark movie as Continue Watching
+     */
+    suspend fun markMovieAsContinueWatching(movie: Movie) {
+        movie.continueWatching = 1
+        movieDatabase.movieDao().saveSingleMovie(movie)
+    }
+
+    /**
      * Get credits by movie.
      * @param movieId The id of the movie to get the credits
      * @return Credits including cast and crew for the movie.
@@ -154,7 +172,7 @@ class MovieDataRepository @Inject constructor(
         return firebaseCredentialProvider.getMovieDBApiKey()
             .flatMapLatest {
                 dataStoreUtils.saveApiKey(it ?: "")
-                return@flatMapLatest flowOf(it ?: "")
+                return@flatMapLatest flowOf("Bearer $it")
             }
     }
 }

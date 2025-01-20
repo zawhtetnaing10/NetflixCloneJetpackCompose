@@ -30,6 +30,7 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil3.compose.AsyncImage
 import com.zg.netflixloginscreenjetpackcompose.R
 import com.zg.netflixloginscreenjetpackcompose.data.models.Movie
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.Black
@@ -54,7 +55,7 @@ fun ContinueWatchingListItem(movie: Movie?, onTapMovie: (Int) -> Unit, modifier:
         .width(HOME_SCREEN_MOVIE_IMAGE_WIDTH)
         .clickable { onTapMovie(movie!!.id!!) }) {
         // Image and Play Button
-        ContinueWatchingImage()
+        ContinueWatchingImage(movie = movie)
         // Progress
         Progress()
         // Buttons
@@ -63,14 +64,14 @@ fun ContinueWatchingListItem(movie: Movie?, onTapMovie: (Int) -> Unit, modifier:
 }
 
 @Composable
-fun ContinueWatchingImage(modifier: Modifier = Modifier) {
+fun ContinueWatchingImage(movie: Movie?, modifier: Modifier = Modifier) {
     Box(modifier = modifier) {
         // Image
         Surface(
             shape = RoundedCornerShape(topStart = MARGIN_MEDIUM, topEnd = MARGIN_MEDIUM),
         ) {
-            Image(
-                painterResource(R.drawable.bleach), contentDescription = null,
+            AsyncImage(
+                movie?.getFullPosterPath(), contentDescription = null,
                 modifier = Modifier.size(width = HOME_SCREEN_MOVIE_IMAGE_WIDTH, height = MOVIE_IMAGE_HEIGHT)
             )
         }
@@ -103,13 +104,14 @@ fun ContinueWatchingImage(modifier: Modifier = Modifier) {
         }
 
         // Latest Episode
-        Text(
-            "S1:E1",
-            color = White,
-            fontSize = TEXT_SMALL,
-            fontFamily = NetflixSansFontFamily,
-            modifier = Modifier.align(Alignment.BottomCenter)
-        )
+        // TODO: - Show again when tv series are added.
+//        Text(
+//            "S1:E1",
+//            color = White,
+//            fontSize = TEXT_SMALL,
+//            fontFamily = NetflixSansFontFamily,
+//            modifier = Modifier.align(Alignment.BottomCenter)
+//        )
     }
 }
 

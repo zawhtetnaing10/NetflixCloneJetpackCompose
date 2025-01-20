@@ -54,6 +54,7 @@ import com.zg.netflixloginscreenjetpackcompose.ui.theme.TEXT_REGULAR
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.White
 import com.zg.netflixloginscreenjetpackcompose.ui.utils.IconSource
 import com.zg.netflixloginscreenjetpackcompose.utils.FEATURED_MOVIE_IMAGE_BASE_URL
+import com.zg.netflixloginscreenjetpackcompose.utils.GENRE_COUNT_IN_FEATURED_MOVIES
 
 @Composable
 fun FeaturedMovie(movie: Movie?, onTapMovie: (Int) -> Unit, modifier: Modifier = Modifier) {
@@ -135,7 +136,7 @@ fun FeaturedMovieButtons(modifier: Modifier = Modifier) {
 fun FeaturedMovieGenres(genres: List<Genre>?, modifier: Modifier = Modifier) {
 
     Row(verticalAlignment = Alignment.CenterVertically, modifier = modifier) {
-        genres?.forEachIndexed { index, genre ->
+        genres?.take(GENRE_COUNT_IN_FEATURED_MOVIES)?.forEachIndexed { index, genre ->
             // Genre Name
             Text(
                 genre.name,
@@ -144,7 +145,7 @@ fun FeaturedMovieGenres(genres: List<Genre>?, modifier: Modifier = Modifier) {
                 fontFamily = NetflixSansFontFamily
             )
             // Dot separator
-            if (index < genres.count() - 1)
+            if (index < GENRE_COUNT_IN_FEATURED_MOVIES - 1)
                 Box(
                     modifier = Modifier
                         .padding(horizontal = MARGIN_MEDIUM)

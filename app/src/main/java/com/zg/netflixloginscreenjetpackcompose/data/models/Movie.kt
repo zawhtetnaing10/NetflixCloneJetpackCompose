@@ -2,10 +2,12 @@ package com.zg.netflixloginscreenjetpackcompose.data.models
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.zg.netflixloginscreenjetpackcompose.utils.FEATURED_MOVIE_IMAGE_BASE_URL
 import com.zg.netflixloginscreenjetpackcompose.utils.GENERAL_MOVIE_IMAGE_BASE_URL
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.Transient
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -39,6 +41,7 @@ data class Movie(
 
     @SerialName("id")
     @ColumnInfo("id")
+    @PrimaryKey
     val id: Int?,
 
     @SerialName("imdb_id")
@@ -115,7 +118,10 @@ data class Movie(
 
     @SerialName("vote_count")
     @ColumnInfo("vote_count")
-    val voteCount: Int?
+    val voteCount: Int?,
+
+    @Transient
+    var continueWatching: Int? = 0
 ) {
 
     /**
