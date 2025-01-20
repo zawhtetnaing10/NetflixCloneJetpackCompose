@@ -7,6 +7,7 @@ plugins {
     id("com.google.gms.google-services")
     id("kotlin-kapt")
     id("com.google.dagger.hilt.android")
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -88,6 +89,14 @@ dependencies {
 
     // Youtube player
     implementation(libs.core)
+
+    // Room
+    implementation(libs.androidx.room.runtime)
+    // Kotlin Extensions and Coroutines support for Room
+    implementation(libs.androidx.room.ktx)
+
+    annotationProcessor(libs.androidx.room.compiler)
+    ksp(libs.androidx.room.compiler)
 }
 
 // Allow references to generated code

@@ -3,11 +3,11 @@ package com.zg.netflixloginscreenjetpackcompose.di
 import com.zg.netflixloginscreenjetpackcompose.firebase.FirebaseCredentialProvider
 import com.zg.netflixloginscreenjetpackcompose.network.BASE_URL
 import com.zg.netflixloginscreenjetpackcompose.network.MoviesApi
+import com.zg.netflixloginscreenjetpackcompose.utils.universalJsonConverter
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import retrofit2.Retrofit
 import retrofit2.converter.kotlinx.serialization.asConverterFactory
@@ -22,15 +22,9 @@ object NetworkModule {
 
     @Provides
     fun provideRetrofit() : Retrofit {
-
-        val json = Json{
-            ignoreUnknownKeys = true
-            explicitNulls = false
-        }
-
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
-            .addConverterFactory(json.asConverterFactory("application/json;charset=UTF8".toMediaType()))
+            .addConverterFactory(universalJsonConverter.asConverterFactory("application/json;charset=UTF8".toMediaType()))
             .build()
     }
 
