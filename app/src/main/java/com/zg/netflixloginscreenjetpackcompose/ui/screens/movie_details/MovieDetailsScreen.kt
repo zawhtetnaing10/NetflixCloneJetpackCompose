@@ -189,6 +189,7 @@ fun MovieDetailsBody(
                 LazyVerticalGrid(
                     columns = GridCells.Fixed(3),
                     verticalArrangement = Arrangement.spacedBy(MARGIN_MEDIUM_2),
+                    horizontalArrangement = Arrangement.spacedBy(MARGIN_MEDIUM),
                     contentPadding = PaddingValues(vertical = MARGIN_LARGE),
                     modifier = Modifier.height(
                         calculateHeightForGrid(

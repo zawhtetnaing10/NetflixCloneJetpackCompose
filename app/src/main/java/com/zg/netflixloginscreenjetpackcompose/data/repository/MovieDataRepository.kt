@@ -1,6 +1,7 @@
 package com.zg.netflixloginscreenjetpackcompose.data.repository
 
 import android.util.Log
+import androidx.room.withTransaction
 import com.zg.netflixloginscreenjetpackcompose.data.models.Genre
 import com.zg.netflixloginscreenjetpackcompose.data.models.Movie
 import com.zg.netflixloginscreenjetpackcompose.data.models.TrailerVideo
@@ -34,7 +35,7 @@ class MovieDataRepository @Inject constructor(
     private val dataStoreUtils: DataStoreUtils,
     private val firebaseCredentialProvider: FirebaseCredentialProvider,
     private val moviesApi: MoviesApi,
-    private val movieDatabase : AppDatabase,
+    private val movieDatabase: AppDatabase,
 ) {
 
     /**
@@ -50,7 +51,7 @@ class MovieDataRepository @Inject constructor(
     /**
      * Fetch movies for Continue Watching
      */
-    fun fetchContinueWatchingMoviesFlow() : Flow<List<Movie>> {
+    fun fetchContinueWatchingMoviesFlow(): Flow<List<Movie>> {
         return movieDatabase.movieDao().getMoviesForContinueWatching()
     }
 

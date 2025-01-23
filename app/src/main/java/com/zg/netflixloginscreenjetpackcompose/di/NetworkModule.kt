@@ -11,16 +11,19 @@ import dagger.hilt.components.SingletonComponent
 import okhttp3.MediaType.Companion.toMediaType
 import retrofit2.Retrofit
 import retrofit2.converter.kotlinx.serialization.asConverterFactory
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
     @Provides
+    @Singleton
     fun provideFirebaseCredentialProvider(): FirebaseCredentialProvider {
         return FirebaseCredentialProvider()
     }
 
     @Provides
+    @Singleton
     fun provideRetrofit() : Retrofit {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
@@ -29,6 +32,7 @@ object NetworkModule {
     }
 
     @Provides
+    @Singleton
     fun provideMovieApi(retrofit : Retrofit) : MoviesApi {
         return retrofit.create(MoviesApi::class.java)
     }
