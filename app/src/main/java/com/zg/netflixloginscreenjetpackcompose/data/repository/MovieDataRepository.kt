@@ -1,7 +1,5 @@
 package com.zg.netflixloginscreenjetpackcompose.data.repository
 
-import android.util.Log
-import androidx.room.withTransaction
 import com.zg.netflixloginscreenjetpackcompose.data.models.Genre
 import com.zg.netflixloginscreenjetpackcompose.data.models.Movie
 import com.zg.netflixloginscreenjetpackcompose.data.models.TrailerVideo
@@ -15,6 +13,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flatMapMerge
@@ -22,6 +21,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.flow.transform
 import javax.inject.Inject
@@ -107,18 +107,26 @@ class MovieDataRepository @Inject constructor(
     }
 
     /**
+     * Reactively observe movie details
+     */
+    fun observeMovieDetails(movieId : Int) : Flow<Movie?>{
+        return movieDatabase.movieDao().observeSingleMovie(movieId)
+    }
+
+    /**
      * Fetch movie details from network.
      */
-    fun fetchMovieDetails(movieId: Int): Flow<Movie?> {
+    suspend fun fetchMovieDetails(movieId: Int) : Flow<Movie?>  {
         return getApiKey()
             .transform { emit(moviesApi.getMovieDetails(authorization = it, movieId = movieId)) }
+            .onEach { markMovieAsContinueWatchingAndSaveToDB(it) }
             .flowOn(Dispatchers.IO)
     }
 
     /**
      * Mark movie as Continue Watching
      */
-    suspend fun markMovieAsContinueWatching(movie: Movie) {
+    suspend fun markMovieAsContinueWatchingAndSaveToDB(movie: Movie) {
         movie.continueWatching = 1
         movieDatabase.movieDao().saveSingleMovie(movie)
     }

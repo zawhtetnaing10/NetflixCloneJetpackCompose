@@ -12,6 +12,9 @@ interface MovieDao {
     @Query("SELECT * FROM movies WHERE continueWatching = 1")
     fun getMoviesForContinueWatching() : Flow<List<Movie>>
 
+    @Query("SELECT * FROM movies WHERE id = :movieId LIMIT 1")
+    fun observeSingleMovie(movieId : Int) : Flow<Movie?>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun saveMovies(movies : List<Movie>) : List<Long>
 

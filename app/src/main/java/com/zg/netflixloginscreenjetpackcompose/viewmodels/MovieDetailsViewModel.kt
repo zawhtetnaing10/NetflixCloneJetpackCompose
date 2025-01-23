@@ -15,6 +15,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.launch
 
@@ -38,17 +39,29 @@ class MovieDetailsViewModel @AssistedInject constructor(
 
     init {
         viewModelScope.launch {
-            launch { fetchMovieDetails(movieId = movieId) }
+            launch { fetchMovieDetails(movieId) }
+            launch { observeMovieDetails(movieId = movieId) }
             launch { fetchCreditsByMovie(movieId = movieId) }
             launch { fetchTrailer(movieId = movieId) }
         }
     }
 
     /**
-     * Fetch Movie Details From Repository
+     * Fetch movie details and save to db
      */
-    private suspend fun fetchMovieDetails(movieId: Int) {
+    private suspend fun fetchMovieDetails(movieId : Int){
         movieDataRepository.fetchMovieDetails(movieId)
+            .catch {
+                _detailsScreenState.value = _detailsScreenState.value.copy(errorMessage = it.message ?: "")
+            }
+            .first()
+    }
+
+    /**
+     * Observe Movie Details From Repository
+     */
+    private suspend fun observeMovieDetails(movieId: Int) {
+        movieDataRepository.observeMovieDetails(movieId)
             .catch {
                 _detailsScreenState.value = _detailsScreenState.value.copy(errorMessage = it.message ?: "")
             }
@@ -57,7 +70,7 @@ class MovieDetailsViewModel @AssistedInject constructor(
 
                 // Mark movie as continue watching.
                 it?.let { movie ->
-                    movieDataRepository.markMovieAsContinueWatching(movie)
+                    movieDataRepository.markMovieAsContinueWatchingAndSaveToDB(movie)
                 }
 
                 // Fetch Related Movies

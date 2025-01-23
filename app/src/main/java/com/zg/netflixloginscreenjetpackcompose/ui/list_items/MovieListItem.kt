@@ -1,6 +1,5 @@
 package com.zg.netflixloginscreenjetpackcompose.ui.list_items
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
@@ -12,19 +11,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import coil3.compose.AsyncImage
 import com.zg.netflixloginscreenjetpackcompose.R
 import com.zg.netflixloginscreenjetpackcompose.data.models.Movie
-import com.zg.netflixloginscreenjetpackcompose.ui.theme.MOVIE_IMAGE_HEIGHT
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.HOME_SCREEN_MOVIE_IMAGE_WIDTH
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.HOME_SCREEN_SUB_TEXT_WIDTH
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.LINE_HEIGHT_SMALL
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.MARGIN_MEDIUM
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.MARGIN_SMALL_2X
+import com.zg.netflixloginscreenjetpackcompose.ui.theme.MOVIE_IMAGE_HEIGHT
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.NetflixCloneJetpackComposeTheme
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.NetflixRedPrimary
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.TEXT_SMALL_3X
