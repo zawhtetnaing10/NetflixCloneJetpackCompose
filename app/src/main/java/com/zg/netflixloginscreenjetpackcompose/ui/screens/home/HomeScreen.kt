@@ -29,10 +29,8 @@ import com.zg.netflixloginscreenjetpackcompose.ui.theme.Black
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.HOME_SCREEN_CATEGORIES_TOP_MARGIN
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.MARGIN_MEDIUM_2
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.MARGIN_MEDIUM_3
-import com.zg.netflixloginscreenjetpackcompose.ui.theme.MARGIN_XXLARGE
 import com.zg.netflixloginscreenjetpackcompose.ui.theme.NetflixCloneJetpackComposeTheme
 import com.zg.netflixloginscreenjetpackcompose.utils.isCloseToTop
-import com.zg.netflixloginscreenjetpackcompose.utils.isScrollingUp
 import com.zg.netflixloginscreenjetpackcompose.viewmodels.HomeViewModel
 
 @Composable
@@ -59,11 +57,13 @@ fun HomeScreen(onTapMovie: (Int) -> Unit, viewModel: HomeViewModel = hiltViewMod
         ) {
             Box {
                 // Gradient
-                HomeScreenGradient()
+                HomeScreenGradient(
+                    isCloseToTop = scrollState.isCloseToTop()
+                )
 
                 // Categories
                 AnimatedVisibility(
-                    scrollState.isCloseToTop(threshold = MARGIN_XXLARGE),
+                    scrollState.isCloseToTop(threshold = 0.dp),
                     enter = fadeIn(),
                     exit = fadeOut()
                 ) {
@@ -85,16 +85,12 @@ fun HomeScreen(onTapMovie: (Int) -> Unit, viewModel: HomeViewModel = hiltViewMod
                     // Featured Movie
                     item {
                         if (homeScreenState.featuredMovie != null)
-                            FeaturedMovie(movie = homeScreenState.featuredMovie, onTapMovie = onTapMovie)
-                    }
-                    // Spacer
-                    item {
-                        Spacer(Modifier.height(MARGIN_MEDIUM_3))
+                            FeaturedMovie(movie = homeScreenState.featuredMovie, onTapMovie = onTapMovie, modifier = Modifier.padding(top = MARGIN_MEDIUM_3))
                     }
                     // Mobile Games
                     item {
                         if (homeScreenState.mobileGames?.isNotEmpty() == true)
-                            MobileGamesSection()
+                            MobileGamesSection(modifier = Modifier.padding(top = MARGIN_MEDIUM_3))
                     }
                     // Continue Watching Section
                     item {

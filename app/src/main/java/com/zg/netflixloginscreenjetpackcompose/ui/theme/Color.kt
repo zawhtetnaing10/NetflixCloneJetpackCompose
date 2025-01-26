@@ -9,7 +9,7 @@ val NetflixGrey = Color(red = 50, green = 50, blue = 50)
 val White = Color(red = 255, green = 255, blue = 255)
 val HintGrey = Color(red = 170, green = 170, blue = 170)
 
-val HomeScreenGradient = Color(red = 41, green = 79, blue = 83)
+val HomeScreenGradientColor = Color(red = 41, green = 79, blue = 83)
 val FeaturedMovieGradient = Black.copy(alpha = 0.5f)
 val ContinueWatchingBackground = Color(red = 22, green = 22, blue = 22)
 val BottomNavigationBackground = Color(red = 30, green = 30, blue = 30)

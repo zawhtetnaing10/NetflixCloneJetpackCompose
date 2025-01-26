@@ -10,6 +10,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.zg.netflixloginscreenjetpackcompose.ui.theme.MARGIN_XXLARGE
 
 /**
  * Returns whether the lazy list is currently scrolling up.
@@ -39,7 +40,7 @@ fun LazyListState.isScrollingUp(): Boolean {
  * Returns whether the LazyList is currently close to the top within a given offset.
  */
 @Composable
-fun LazyListState.isCloseToTop(threshold: Dp = 140.dp): Boolean {
+fun LazyListState.isCloseToTop(threshold: Dp = MARGIN_XXLARGE): Boolean {
     val thresholdPx = with(LocalDensity.current) { threshold.toPx() }
     return remember(this) {
         derivedStateOf {
